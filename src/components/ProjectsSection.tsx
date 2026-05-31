@@ -6,7 +6,7 @@ const projects = [
   {
     number: '01',
     category: 'Client',
-    name: 'Wooden Tree Houses',
+    name: 'Wooden Tree House',
     url: 'https://www.woodentreehousesgp.com/',
   },
   {
