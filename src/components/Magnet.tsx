@@ -1,4 +1,4 @@
-import { useRef, ReactNode } from 'react'
+import { useRef, type ReactNode } from 'react'
 
 interface MagnetProps {
   children: ReactNode
@@ -11,7 +11,6 @@ interface MagnetProps {
 
 export default function Magnet({
   children,
-  padding = 150,
   strength = 3,
   activeTransition = 'transform 0.3s ease-out',
   inactiveTransition = 'transform 0.6s ease-in-out',
