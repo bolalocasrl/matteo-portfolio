@@ -37,7 +37,6 @@ export default function HeroSection() {
 
       {/* Portrait */}
       <Magnet
-        padding={150}
         strength={3}
         activeTransition="transform 0.3s ease-out"
         inactiveTransition="transform 0.6s ease-in-out"
