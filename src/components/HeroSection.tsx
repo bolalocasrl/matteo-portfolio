@@ -30,7 +30,7 @@ export default function HeroSection() {
           <h1
             className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[13vw] sm:text-[14vw] md:text-[15vw] lg:text-[16vw] px-4"
           >
-            Hi, i&apos;m Matteo
+            Hi, i&apos;m Matt
           </h1>
         </FadeIn>
       </div>

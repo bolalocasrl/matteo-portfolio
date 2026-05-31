@@ -2,7 +2,6 @@ import { useRef, type ReactNode } from 'react'
 
 interface MagnetProps {
   children: ReactNode
-  padding?: number
   strength?: number
   activeTransition?: string
   inactiveTransition?: string
@@ -28,7 +27,6 @@ export default function Magnet({
     const distY = e.clientY - centerY
     el.style.transition = activeTransition
     el.style.transform = `translate3d(${distX / strength}px, ${distY / strength}px, 0)`
-    el.style.willChange = 'transform'
   }
 
   const handleMouseLeave = () => {
@@ -44,7 +42,7 @@ export default function Magnet({
       className={className}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ willChange: 'transform' }}
+      style={{ willChange: 'transform', display: 'inline-block' }}
     >
       {children}
     </div>
