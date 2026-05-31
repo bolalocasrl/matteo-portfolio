@@ -5,14 +5,14 @@ import ContactButton from './ContactButton'
 export default function HeroSection() {
   const portraitRef = useRef<HTMLDivElement>(null)
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const el = portraitRef.current
     if (!el) return
     const rect = el.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
-    const distX = (e.clientX - centerX) / 4
-    const distY = (e.clientY - centerY) / 4
+    const distX = (e.clientX - centerX) / 6
+    const distY = (e.clientY - centerY) / 6
     el.style.transition = 'transform 0.3s ease-out'
     el.style.transform = `translate3d(${distX}px, ${distY}px, 0)`
   }
