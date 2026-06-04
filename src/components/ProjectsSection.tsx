@@ -59,7 +59,6 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
           borderRadius: '40px',
           padding: '1.5rem',
           transformOrigin: 'top center',
-          marginBottom: '1rem',
         }}
       >
         {/* Top row */}
