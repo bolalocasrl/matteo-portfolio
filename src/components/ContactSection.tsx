@@ -6,6 +6,7 @@ export default function ContactSection() {
   const [message, setMessage] = useState('')
   const [consent, setConsent] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [showPrivacy, setShowPrivacy] = useState(false)
 
   const handleSubmit = () => {
     if (!email || !consent) return
@@ -87,7 +88,7 @@ export default function ContactSection() {
                 />
                 <span style={{ color: '#0C0C0C', opacity: 0.6, fontSize: '0.8rem', fontFamily: 'Kanit, sans-serif' }}>
                   I agree to be contacted by Matteo D&apos;Angelo regarding my project inquiry.{' '}
-                  <a href="#privacy" style={{ textDecoration: 'underline' }}>Privacy policy</a>
+                  <span onClick={() => setShowPrivacy(true)} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Privacy policy</span>
                 </span>
               </label>
 
@@ -126,6 +127,23 @@ export default function ContactSection() {
               ✓ Got it! I&apos;ll be in touch within 24h.
             </p>
           </FadeIn>
+        )}
+
+        {showPrivacy && (
+          <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }} onClick={() => setShowPrivacy(false)}>
+            <div style={{ backgroundColor: 'white', borderRadius: '24px', padding: '2rem', maxWidth: '540px', width: '100%', maxHeight: '80vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
+              <h2 style={{ fontFamily: 'Kanit, sans-serif', fontWeight: 700, fontSize: '1.5rem', marginBottom: '1rem', color: '#0C0C0C' }}>Privacy Policy</h2>
+              <p style={{ fontFamily: 'Kanit, sans-serif', fontSize: '0.9rem', color: '#0C0C0C', lineHeight: 1.7, opacity: 0.8 }}>
+                This website is operated by Matteo D&apos;Angelo, web designer.<br /><br />
+                <strong>Data collected:</strong> When you submit the contact form, we collect your email address and any message you choose to provide.<br /><br />
+                <strong>Purpose:</strong> Your data is used solely to respond to your project inquiry. It will not be shared with third parties or used for marketing without your explicit consent.<br /><br />
+                <strong>Retention:</strong> Your data is kept only as long as necessary to handle your inquiry.<br /><br />
+                <strong>Your rights:</strong> You have the right to access, correct, or delete your personal data at any time. Contact us at matteo.dangelo1099@gmail.com.<br /><br />
+                <strong>Contact:</strong> matteo.dangelo1099@gmail.com · WhatsApp +34 632 854 055
+              </p>
+              <button onClick={() => setShowPrivacy(false)} style={{ marginTop: '1.5rem', background: '#0C0C0C', color: 'white', border: 'none', borderRadius: '9999px', padding: '0.7rem 2rem', fontFamily: 'Kanit, sans-serif', cursor: 'pointer' }}>Close</button>
+            </div>
+          </div>
         )}
 
         {/* Footer */}
