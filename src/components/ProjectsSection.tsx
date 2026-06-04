@@ -47,8 +47,7 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
   return (
     <div
       style={{
-        height: isMobile ? 'auto' : '85vh',
-        paddingBottom: isMobile ? '1.5rem' : '0',
+        height: '85vh',
         display: 'flex',
         alignItems: 'flex-start',
         position: 'sticky',
@@ -58,7 +57,7 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
       <motion.div
         style={{
           scale,
-          top: isMobile ? 0 : `${index * 28}px`,
+          top: isMobile ? '1rem' : `${index * 28}px`,
           position: 'relative',
           width: '100%',
           backgroundColor: '#0C0C0C',
