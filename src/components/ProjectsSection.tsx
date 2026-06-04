@@ -1,6 +1,5 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useState } from 'react'
 
 const projects = [
   {
@@ -8,24 +7,28 @@ const projects = [
     category: 'Client',
     name: 'Wooden Tree House',
     url: 'https://www.woodentreehousesgp.com/',
+    screenshot: 'woodentreehouse',
   },
   {
     number: '02',
     category: 'Client',
     name: 'Finexa CRM',
     url: 'https://finexacrm.vercel.app/',
+    screenshot: 'finexacrm',
   },
   {
     number: '03',
     category: 'Personal',
     name: 'Nicole Belentani',
     url: 'https://nicolebelentani.vercel.app/',
+    screenshot: 'nicole-belentani',
   },
   {
     number: '04',
     category: 'Client',
     name: 'Sciaram33',
     url: 'https://sciaram33.vercel.app/',
+    screenshot: 'sciaram33',
   },
 ]
 
@@ -38,8 +41,13 @@ interface ProjectCardProps {
 
 function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
   const [iframeOpen, setIframeOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const targetScale = 1 - (total - 1 - index) * 0.03
   const scale = useTransform(progress, [index / total, 1], [1, targetScale])
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+  }, [])
 
   return (
     <div
@@ -108,7 +116,7 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
           </button>
         </div>
 
-        {/* Preview image placeholder */}
+        {/* Preview */}
         <div
           style={{
             width: '100%',
@@ -116,23 +124,33 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
             borderRadius: '24px',
             overflow: 'hidden',
             background: 'rgba(215,226,234,0.05)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
           }}
         >
-          <iframe
-            src={project.url}
-            style={{
-              width: '100%',
-              height: '100%',
-              border: 'none',
-              borderRadius: '24px',
-              pointerEvents: 'none',
-            }}
-            title={project.name}
-            loading="lazy"
-          />
+          {isMobile ? (
+            <img
+              src={`/screenshots/${project.screenshot}.jpeg`}
+              alt={project.name}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                borderRadius: '24px',
+              }}
+            />
+          ) : (
+            <iframe
+              src={project.url}
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                borderRadius: '24px',
+                pointerEvents: 'none',
+              }}
+              title={project.name}
+              loading="lazy"
+            />
+          )}
         </div>
       </motion.div>
 

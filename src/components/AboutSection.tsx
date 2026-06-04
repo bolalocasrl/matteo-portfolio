@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
 import FadeIn from './FadeIn'
 import ContactButton from './ContactButton'
 
-const text = "With more than three years of experience in web design, i focus on creating modern websites and digital experiences. I truly enjoy working with businesses and individuals that aim to stand out and present their best image online. Let's build something incredible together!"
+const text = "With more than three years of experience in web design, I focus on creating modern websites and digital experiences. I truly enjoy working with businesses and individuals that aim to stand out and present their best image online. Let's build something incredible together!"
 
 interface AnimatedCharProps {
   char: string

@@ -1,35 +1,11 @@
-import { useRef } from 'react'
 import FadeIn from './FadeIn'
 import ContactButton from './ContactButton'
 
 export default function HeroSection() {
-  const portraitRef = useRef<HTMLDivElement>(null)
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const el = portraitRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-    const distX = (e.clientX - centerX) / 6
-    const distY = (e.clientY - centerY) / 6
-    el.style.transition = 'transform 0.3s ease-out'
-    el.style.transform = `translate3d(${distX}px, ${distY}px, 0)`
-  }
-
-  const handleMouseLeave = () => {
-    const el = portraitRef.current
-    if (!el) return
-    el.style.transition = 'transform 0.6s ease-in-out'
-    el.style.transform = 'translate3d(0, 0, 0)'
-  }
-
   return (
     <section
       style={{ backgroundColor: '#0C0C0C', overflowX: 'clip' }}
       className="h-screen flex flex-col relative"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
       {/* Navbar */}
       <FadeIn delay={0} y={-20}>
@@ -59,11 +35,7 @@ export default function HeroSection() {
       </div>
 
       {/* Portrait */}
-      <div
-        ref={portraitRef}
-        className="absolute left-1/2 -translate-x-1/2 z-10 w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0"
-        style={{ willChange: 'transform' }}
-      >
+      <div className="absolute left-1/2 -translate-x-1/2 z-10 w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] bottom-0">
         <FadeIn delay={0.6} y={30}>
           <img
             src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
