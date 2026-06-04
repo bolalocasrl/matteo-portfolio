@@ -18,9 +18,10 @@ interface ProjectCardProps {
   index: number
   total: number
   progress: any
+  simple?: boolean
 }
 
-function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
+function ProjectCard({ project, index, total, progress, simple = false }: ProjectCardProps) {
   const [iframeOpen, setIframeOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const targetScale = 1 - (total - 1 - index) * 0.03
@@ -46,107 +47,128 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
     ? `/screenshots/${screenshotMap[screenshotKey]}.jpeg`
     : '/screenshots/woodentreehouse.jpeg'
 
+  const cardContent = (
+    <>
+      {/* Top row */}
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+        <div className="flex items-center gap-4 flex-wrap">
+          <span
+            className="font-black leading-none"
+            style={{ color: '#D7E2EA', fontSize: 'clamp(2rem, 6vw, 5rem)', lineHeight: 1 }}
+          >
+            {project.number}
+          </span>
+          <span
+            className="font-light uppercase tracking-widest"
+            style={{ color: '#D7E2EA', opacity: 0.5, fontSize: 'clamp(0.7rem, 1.2vw, 1rem)' }}
+          >
+            {project.category}
+          </span>
+          <span
+            className="font-medium uppercase"
+            style={{ color: '#D7E2EA', fontSize: 'clamp(1rem, 2vw, 1.8rem)' }}
+          >
+            {project.name}
+          </span>
+        </div>
+        <button
+          onClick={() => setIframeOpen(true)}
+          style={{
+            border: '2px solid #D7E2EA',
+            color: '#D7E2EA',
+            borderRadius: '9999px',
+            background: 'transparent',
+            cursor: 'pointer',
+            fontFamily: 'Kanit, sans-serif',
+            fontWeight: 500,
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            fontSize: 'clamp(0.7rem, 1vw, 0.9rem)',
+            padding: '0.6rem 1.5rem',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(215,226,234,0.1)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+        >
+          View Project
+        </button>
+      </div>
+
+      {/* Preview */}
+      <div
+        style={{
+          width: '100%',
+          height: 'auto',
+          aspectRatio: '16/9',
+          borderRadius: '24px',
+          overflow: 'hidden',
+          background: 'rgba(215,226,234,0.05)',
+        }}
+      >
+        {isMobile ? (
+          <img
+            src={screenshotSrc}
+            alt={project.name}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              borderRadius: '24px',
+              backgroundColor: '#111',
+            }}
+          />
+        ) : (
+          <iframe
+            src={project.url}
+            style={{
+              width: '100%',
+              height: '100%',
+              border: 'none',
+              borderRadius: '24px',
+              pointerEvents: 'none',
+            }}
+            title={project.name}
+            loading="lazy"
+          />
+        )}
+      </div>
+    </>
+  )
+
   return (
     <>
-      <div style={{ position: 'sticky', top: '5rem', height: 'auto' }}>
-        <motion.div
+      {simple ? (
+        <div
           style={{
-            scale,
-            position: 'relative',
-            top: 0,
             width: '100%',
             backgroundColor: '#0C0C0C',
             border: '2px solid #D7E2EA',
             borderRadius: '40px',
             padding: '1.5rem',
-            transformOrigin: 'top center',
-            marginBottom: 0,
+            marginBottom: '1.5rem',
           }}
         >
-          {/* Top row */}
-          <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
-            <div className="flex items-center gap-4 flex-wrap">
-              <span
-                className="font-black leading-none"
-                style={{ color: '#D7E2EA', fontSize: 'clamp(2rem, 6vw, 5rem)', lineHeight: 1 }}
-              >
-                {project.number}
-              </span>
-              <span
-                className="font-light uppercase tracking-widest"
-                style={{ color: '#D7E2EA', opacity: 0.5, fontSize: 'clamp(0.7rem, 1.2vw, 1rem)' }}
-              >
-                {project.category}
-              </span>
-              <span
-                className="font-medium uppercase"
-                style={{ color: '#D7E2EA', fontSize: 'clamp(1rem, 2vw, 1.8rem)' }}
-              >
-                {project.name}
-              </span>
-            </div>
-            <button
-              onClick={() => setIframeOpen(true)}
-              style={{
-                border: '2px solid #D7E2EA',
-                color: '#D7E2EA',
-                borderRadius: '9999px',
-                background: 'transparent',
-                cursor: 'pointer',
-                fontFamily: 'Kanit, sans-serif',
-                fontWeight: 500,
-                textTransform: 'uppercase',
-                letterSpacing: '0.15em',
-                fontSize: 'clamp(0.7rem, 1vw, 0.9rem)',
-                padding: '0.6rem 1.5rem',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(215,226,234,0.1)')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-            >
-              View Project
-            </button>
-          </div>
-
-          {/* Preview */}
-          <div
+          {cardContent}
+        </div>
+      ) : (
+        <div style={{ position: 'sticky', top: '5rem', height: 'auto' }}>
+          <motion.div
             style={{
+              scale,
+              position: 'relative',
+              top: 0,
               width: '100%',
-              height: 'auto',
-              aspectRatio: '16/9',
-              borderRadius: '24px',
-              overflow: 'hidden',
-              background: 'rgba(215,226,234,0.05)',
+              backgroundColor: '#0C0C0C',
+              border: '2px solid #D7E2EA',
+              borderRadius: '40px',
+              padding: '1.5rem',
+              transformOrigin: 'top center',
+              marginBottom: 0,
             }}
           >
-            {isMobile ? (
-              <img
-                src={screenshotSrc}
-                alt={project.name}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  borderRadius: '24px',
-                  backgroundColor: '#111',
-                }}
-              />
-            ) : (
-              <iframe
-                src={project.url}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  border: 'none',
-                  borderRadius: '24px',
-                  pointerEvents: 'none',
-                }}
-                title={project.name}
-                loading="lazy"
-              />
-            )}
-          </div>
-        </motion.div>
-      </div>
+            {cardContent}
+          </motion.div>
+        </div>
+      )}
 
       {/* Modal iframe overlay */}
       {iframeOpen && (
@@ -212,10 +234,15 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
 
 export default function ProjectsSection() {
   const cardsRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const { scrollYProgress } = useScroll({
     target: cardsRef,
     offset: ['start start', 'end end'],
   })
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+  }, [])
 
   return (
     <section
@@ -232,7 +259,11 @@ export default function ProjectsSection() {
 
       <div
         ref={cardsRef}
-        style={{ height: 'auto', paddingBottom: `${projects.length * 80}px`, position: 'relative' }}
+        style={{
+          height: 'auto',
+          paddingBottom: isMobile ? 0 : `${projects.length * 80}px`,
+          position: 'relative',
+        }}
       >
         {projects.map((project, i) => (
           <ProjectCard
@@ -241,6 +272,7 @@ export default function ProjectsSection() {
             index={i}
             total={projects.length}
             progress={scrollYProgress}
+            simple={isMobile}
           />
         ))}
       </div>
