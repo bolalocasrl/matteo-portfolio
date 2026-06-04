@@ -2,34 +2,15 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 const projects = [
-  {
-    number: '01',
-    category: 'Client',
-    name: 'Wooden Tree House',
-    url: 'https://www.woodentreehousesgp.com/',
-    screenshot: 'woodentreehouse',
-  },
-  {
-    number: '02',
-    category: 'Client',
-    name: 'Finexa CRM',
-    url: 'https://finexacrm.vercel.app/',
-    screenshot: 'finexacrm',
-  },
-  {
-    number: '03',
-    category: 'Personal',
-    name: 'Nicole Belentani',
-    url: 'https://nicolebelentani.vercel.app/',
-    screenshot: 'nicole-belentani',
-  },
-  {
-    number: '04',
-    category: 'Client',
-    name: 'Sciaram33',
-    url: 'https://sciaram33.vercel.app/',
-    screenshot: 'sciaram33',
-  },
+  { number: '01', category: 'Client', name: 'Wooden Tree House', url: 'https://www.woodentreehousesgp.com/' },
+  { number: '02', category: 'Client', name: 'Finexa CRM', url: 'https://finexacrm.vercel.app/' },
+  { number: '03', category: 'Personal', name: 'Nicole Belentani', url: 'https://nicolebelentani.vercel.app/' },
+  { number: '04', category: 'Client', name: 'Sciaram33', url: 'https://sciaram33.vercel.app/' },
+  { number: '05', category: 'Client', name: 'Pizzeria Maragall', url: 'https://pizzeria-maragall.vercel.app/' },
+  { number: '06', category: 'Client', name: 'Ristorante Bergamini', url: 'https://ristorante-bergamini.vercel.app/' },
+  { number: '07', category: 'Personal', name: 'Point of View', url: 'https://point-of-view-nine.vercel.app/' },
+  { number: '08', category: 'Client', name: 'Love Phone', url: 'https://love-phone-blond.vercel.app/' },
+  { number: '09', category: 'Client', name: 'La Gorda HDP', url: 'https://la-gorda-hdp.vercel.app/' },
 ]
 
 interface ProjectCardProps {
@@ -48,6 +29,20 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
   useEffect(() => {
     setIsMobile(window.innerWidth < 768)
   }, [])
+
+  const screenshotMap: Record<string, string> = {
+    'woodentreehousesgp.com': 'woodentreehouse',
+    'finexacrm': 'finexacrm',
+    'sciaram33': 'sciaram33',
+    'nicolebelentani': 'nicole-belentani',
+    'pizzeria-maragall': 'pizzeria-maragall',
+    'ristorante-bergamini': 'ristorante-bergamini',
+    'point-of-view': 'point-of-view',
+    'love-phone': 'love-phone',
+    'la-gorda-hdp': 'la-gorda-hdp',
+  }
+  const screenshotKey = Object.keys(screenshotMap).find(key => project.url.includes(key))
+  const screenshotSrc = screenshotKey ? `/screenshots/${screenshotMap[screenshotKey]}.jpeg` : '/screenshots/woodentreehouse.jpeg'
 
   return (
     <div
@@ -130,7 +125,7 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
         >
           {isMobile ? (
             <img
-              src={`/screenshots/${project.screenshot}.jpeg`}
+              src={screenshotSrc}
               alt={project.name}
               style={{
                 width: '100%',
