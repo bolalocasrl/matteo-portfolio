@@ -42,28 +42,24 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
     'la-gorda-hdp': 'la-gorda-hdp',
   }
   const screenshotKey = Object.keys(screenshotMap).find(key => project.url.includes(key))
-  const screenshotSrc = screenshotKey ? `/screenshots/${screenshotMap[screenshotKey]}.jpeg` : '/screenshots/woodentreehouse.jpeg'
+  const screenshotSrc = screenshotKey
+    ? `/screenshots/${screenshotMap[screenshotKey]}.jpeg`
+    : '/screenshots/woodentreehouse.jpeg'
 
   return (
-    <div
-      style={{
-        height: '100vh',
-        position: 'sticky',
-        top: '6rem',
-      }}
-    >
+    <>
       <motion.div
         style={{
           scale,
-          top: `${96 + index * 28}px`,
           position: 'sticky',
+          top: `${96 + index * 28}px`,
           width: '100%',
           backgroundColor: '#0C0C0C',
           border: '2px solid #D7E2EA',
           borderRadius: '40px',
           padding: '1.5rem',
           transformOrigin: 'top center',
-          marginBottom: '0',
+          marginBottom: '1rem',
         }}
       >
         {/* Top row */}
@@ -208,21 +204,20 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
 export default function ProjectsSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const cardsRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: cardsRef,
     offset: ['start start', 'end end'],
   })
 
   return (
     <section
       id="projects"
-      ref={containerRef}
       className="rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 relative z-10 px-5 sm:px-8 md:px-10 pt-20 sm:pt-24 md:pt-32 pb-32"
       style={{ backgroundColor: '#0C0C0C' }}
     >
@@ -233,7 +228,10 @@ export default function ProjectsSection() {
         Projects
       </h2>
 
-      <div style={{ position: 'relative' }}>
+      <div
+        ref={cardsRef}
+        style={{ height: `${projects.length * 100}vh`, position: 'relative' }}
+      >
         {projects.map((project, i) => (
           <ProjectCard
             key={project.number}
