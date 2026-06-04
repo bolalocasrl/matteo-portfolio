@@ -4,11 +4,11 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 const projects = [
   { number: '01', category: 'Client', name: 'Wooden Tree House', url: 'https://www.woodentreehousesgp.com/' },
   { number: '02', category: 'Client', name: 'Finexa CRM', url: 'https://finexacrm.vercel.app/' },
-  { number: '03', category: 'Personal', name: 'Nicole Belentani', url: 'https://nicolebelentani.vercel.app/' },
+  { number: '03', category: 'Client', name: 'Nicole Belentani', url: 'https://nicolebelentani.vercel.app/' },
   { number: '04', category: 'Client', name: 'Sciaram33', url: 'https://sciaram33.vercel.app/' },
   { number: '05', category: 'Client', name: 'Pizzeria Maragall', url: 'https://pizzeria-maragall.vercel.app/' },
   { number: '06', category: 'Client', name: 'Ristorante Bergamini', url: 'https://ristorante-bergamini.vercel.app/' },
-  { number: '07', category: 'Personal', name: 'Point of View', url: 'https://point-of-view-nine.vercel.app/' },
+  { number: '07', category: 'Client', name: 'Point of View', url: 'https://point-of-view-nine.vercel.app/' },
   { number: '08', category: 'Client', name: 'Love Phone', url: 'https://love-phone-blond.vercel.app/' },
   { number: '09', category: 'Client', name: 'La Gorda HDP', url: 'https://la-gorda-hdp.vercel.app/' },
 ]
