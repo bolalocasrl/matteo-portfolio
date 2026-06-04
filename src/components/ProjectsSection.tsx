@@ -52,7 +52,7 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
         style={{
           scale,
           position: 'sticky',
-          top: `${96 + index * 28}px`,
+          top: `${96 + index * 60}px`,
           width: '100%',
           backgroundColor: '#0C0C0C',
           border: '2px solid #D7E2EA',
@@ -229,7 +229,7 @@ export default function ProjectsSection() {
 
       <div
         ref={cardsRef}
-        style={{ height: `${projects.length * 100}vh`, position: 'relative' }}
+        style={{ height: `${projects.length * 20}vh`, position: 'relative' }}
       >
         {projects.map((project, i) => (
           <ProjectCard
