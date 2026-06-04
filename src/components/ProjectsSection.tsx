@@ -52,7 +52,8 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
   return (
     <div
       style={{
-        height: isMobile ? '70vh' : '85vh',
+        height: isMobile ? 'auto' : '85vh',
+        paddingBottom: isMobile ? '1.5rem' : '0',
         display: 'flex',
         alignItems: 'flex-start',
         position: 'sticky',
