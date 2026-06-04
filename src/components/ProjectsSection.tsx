@@ -57,7 +57,7 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
       <motion.div
         style={{
           scale,
-          top: isMobile ? '1rem' : `${index * 28}px`,
+          top: `${index * 28}px`,
           position: 'relative',
           width: '100%',
           backgroundColor: '#0C0C0C',
