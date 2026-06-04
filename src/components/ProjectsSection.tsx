@@ -47,9 +47,7 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
   return (
     <div
       style={{
-        height: '85vh',
-        display: 'flex',
-        alignItems: 'flex-start',
+        height: '100vh',
         position: 'sticky',
         top: '6rem',
       }}
@@ -57,14 +55,15 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
       <motion.div
         style={{
           scale,
-          top: `${index * 28}px`,
-          position: 'relative',
+          top: `${96 + index * 28}px`,
+          position: 'sticky',
           width: '100%',
           backgroundColor: '#0C0C0C',
           border: '2px solid #D7E2EA',
           borderRadius: '40px',
           padding: '1.5rem',
           transformOrigin: 'top center',
+          marginBottom: '0',
         }}
       >
         {/* Top row */}
