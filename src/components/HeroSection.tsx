@@ -35,7 +35,7 @@ export default function HeroSection() {
       </div>
 
       {/* Portrait */}
-      <div className="absolute left-1/2 -translate-x-1/2 z-10 w-[260px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-[38%] -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0">
+      <div className="absolute left-1/2 -translate-x-1/2 z-10 w-[260px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-[50%] -translate-y-[40%] sm:top-auto sm:translate-y-0 sm:bottom-0">
         <FadeIn delay={0.6} y={30}>
           <img
             src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
