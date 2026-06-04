@@ -120,7 +120,8 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
         <div
           style={{
             width: '100%',
-            height: 'clamp(200px, 35vw, 420px)',
+            height: 'auto',
+            aspectRatio: '16/9',
             borderRadius: '24px',
             overflow: 'hidden',
             background: 'rgba(215,226,234,0.05)',
@@ -133,8 +134,9 @@ function ProjectCard({ project, index, total, progress }: ProjectCardProps) {
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
+                objectFit: 'contain',
                 borderRadius: '24px',
+                backgroundColor: '#111',
               }}
             />
           ) : (
