@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
 
-const GIFS = [
-  'https://www.woodentreehousesgp.com/og-image.png',
-  'https://finexacrm.vercel.app/og-image.png',
-  'https://sciaram33.vercel.app/og-image.png',
-  'https://nicolebelentani.vercel.app/og-image.png',
-  'https://pizzeria-maragall.vercel.app/og-image.png',
-  'https://ristorante-bergamini.vercel.app/og-image.png',
-  'https://point-of-view-nine.vercel.app/og-image.png',
-  'https://love-phone-blond.vercel.app/og-image.png',
-  'https://la-gorda-hdp.vercel.app/og-image.png',
+const IMAGES = [
+  '/screenshots/finexacrm.jpeg',
+  '/screenshots/woodentreehouse.jpeg',
+  '/screenshots/sciaram33.jpeg',
+  '/screenshots/nicole-belentani.jpeg',
+  '/screenshots/pizzeria-maragall.jpeg',
+  '/screenshots/ristorante-bergamini.jpeg',
+  '/screenshots/point-of-view.jpeg',
+  '/screenshots/love-phone.jpeg',
+  '/screenshots/la-gorda-hdp.jpeg',
 ]
 
-const ROW1 = [...GIFS.slice(0, 5), ...GIFS.slice(0, 5), ...GIFS.slice(0, 5)]
-const ROW2 = [...GIFS.slice(5), ...GIFS.slice(5), ...GIFS.slice(5)]
+const ROW1 = [...IMAGES, ...IMAGES, ...IMAGES]
+const ROW2 = [...IMAGES.slice(4), ...IMAGES.slice(0, 4), ...IMAGES.slice(4), ...IMAGES.slice(0, 4), ...IMAGES.slice(4), ...IMAGES.slice(0, 4)]
 
 export default function MarqueeSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -36,7 +36,6 @@ export default function MarqueeSection() {
       style={{ backgroundColor: '#0C0C0C' }}
       className="pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden"
     >
-      {/* Row 1 — moves right */}
       <div
         style={{
           transform: `translateX(${offset - 200}px)`,
@@ -46,10 +45,10 @@ export default function MarqueeSection() {
           marginBottom: '12px',
         }}
       >
-        {ROW1.map((gif, i) => (
+        {ROW1.map((img, i) => (
           <img
             key={i}
-            src={gif}
+            src={img}
             alt=""
             loading="lazy"
             style={{
@@ -63,7 +62,6 @@ export default function MarqueeSection() {
         ))}
       </div>
 
-      {/* Row 2 — moves left */}
       <div
         style={{
           transform: `translateX(${-(offset - 200)}px)`,
@@ -72,10 +70,10 @@ export default function MarqueeSection() {
           gap: '12px',
         }}
       >
-        {ROW2.map((gif, i) => (
+        {ROW2.map((img, i) => (
           <img
             key={i}
-            src={gif}
+            src={img}
             alt=""
             loading="lazy"
             style={{
