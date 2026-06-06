@@ -8,11 +8,27 @@ export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false)
   const [showPrivacy, setShowPrivacy] = useState(false)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!email || !consent) return
-    const mailtoLink = `mailto:matteo.dangelo1099@gmail.com?subject=New project inquiry from ${email}&body=${encodeURIComponent(message)}`
-    window.location.href = mailtoLink
+
     setSubmitted(true)
+
+    try {
+      await fetch('https://formspree.io/f/xwvjvalk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          message: message,
+          _subject: `New project inquiry from ${email}`,
+        })
+      })
+    } catch (error) {
+      console.error('Form error:', error)
+    }
   }
 
   return (
