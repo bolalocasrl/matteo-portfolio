@@ -2,16 +2,16 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 const projects = [
-  { number: '01', category: 'Client', name: 'Wooden Tree House', url: 'https://www.woodentreehousesgp.com/' },
-  { number: '02', category: 'Client', name: 'Finexa CRM', url: 'https://finexacrm.vercel.app/' },
-  { number: '03', category: 'Client', name: 'Nutrizionista Nicole Belentani', url: 'https://nicolebelentani.vercel.app/' },
-  { number: '04', category: 'Client', name: 'Sciaram33', url: 'https://sciaram33.vercel.app/' },
-  { number: '05', category: 'Client', name: 'Pizzeria Maragall', url: 'https://pizzeria-maragall.vercel.app/' },
-  { number: '06', category: 'Client', name: 'Ristorante Bergamini', url: 'https://ristorante-bergamini.vercel.app/' },
-  { number: '07', category: 'Client', name: 'Point of View', url: 'https://point-of-view-nine.vercel.app/' },
-  { number: '08', category: 'Client', name: 'Love Phone', url: 'https://love-phone-blond.vercel.app/' },
-  { number: '09', category: 'Client', name: 'La Gorda HDP', url: 'https://la-gorda-hdp.vercel.app/' },
-  { number: '10', category: 'Client', name: 'Dott. Jacopo Di Bernardini', url: 'https://jacopo-dibernardini.vercel.app/' },
+  { number: '01', category: 'Client', name: 'Wooden Tree House', url: 'https://www.woodentreehousesgp.com/', tag: 'Creative' },
+  { number: '02', category: 'Client', name: 'Finexa CRM', url: 'https://finexacrm.vercel.app/', tag: 'Professionals' },
+  { number: '03', category: 'Client', name: 'Nutrizionista Nicole Belentani', url: 'https://nicolebelentani.vercel.app/', tag: 'Professionals' },
+  { number: '04', category: 'Client', name: 'Sciaram33', url: 'https://sciaram33.vercel.app/', tag: 'Creative' },
+  { number: '05', category: 'Client', name: 'Pizzeria Maragall', url: 'https://pizzeria-maragall.vercel.app/', tag: 'Restaurants' },
+  { number: '06', category: 'Client', name: 'Ristorante Bergamini', url: 'https://ristorante-bergamini.vercel.app/', tag: 'Restaurants' },
+  { number: '07', category: 'Client', name: 'Point of View', url: 'https://point-of-view-nine.vercel.app/', tag: 'Creative' },
+  { number: '08', category: 'Client', name: 'Love Phone', url: 'https://love-phone-blond.vercel.app/', tag: 'Creative' },
+  { number: '09', category: 'Client', name: 'La Gorda HDP', url: 'https://la-gorda-hdp.vercel.app/', tag: 'Restaurants' },
+  { number: '10', category: 'Client', name: 'Dott. Jacopo Di Bernardini', url: 'https://jacopo-dibernardini.vercel.app/', tag: 'Professionals' },
 ]
 
 interface ProjectCardProps {
@@ -237,6 +237,9 @@ function ProjectCard({ project, index, total, progress, simple = false }: Projec
 export default function ProjectsSection() {
   const cardsRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [activeFilter, setActiveFilter] = useState('All')
+  const filters = ['All', 'Restaurants', 'Professionals', 'Creative']
+  const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.tag === activeFilter)
   const { scrollYProgress } = useScroll({
     target: cardsRef,
     offset: ['start start', 'end end'],
@@ -259,20 +262,45 @@ export default function ProjectsSection() {
         Projects
       </h2>
 
+      <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
+        {filters.map(filter => (
+          <button
+            key={filter}
+            onClick={() => setActiveFilter(filter)}
+            style={{
+              border: '2px solid #D7E2EA',
+              color: activeFilter === filter ? '#0C0C0C' : '#D7E2EA',
+              backgroundColor: activeFilter === filter ? '#D7E2EA' : 'transparent',
+              borderRadius: '9999px',
+              padding: '0.5rem 1.5rem',
+              fontFamily: 'Kanit, sans-serif',
+              fontWeight: 500,
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              fontSize: 'clamp(0.7rem, 1.2vw, 0.9rem)',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            {filter}
+          </button>
+        ))}
+      </div>
+
       <div
         ref={cardsRef}
         style={{
           height: 'auto',
-          paddingBottom: isMobile ? 0 : `${projects.length * 80}px`,
+          paddingBottom: isMobile ? 0 : `${filteredProjects.length * 80}px`,
           position: 'relative',
         }}
       >
-        {projects.map((project, i) => (
+        {filteredProjects.map((project, i) => (
           <ProjectCard
             key={project.number}
             project={project}
             index={i}
-            total={projects.length}
+            total={filteredProjects.length}
             progress={scrollYProgress}
             simple={isMobile}
           />
