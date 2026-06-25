@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 
 const IMAGES = [
-  '/screenshots/finexacrm.jpeg',
-  '/screenshots/woodentreehouse.jpeg',
-  '/screenshots/sciaram33.jpeg',
-  '/screenshots/nicole-belentani.jpeg',
-  '/screenshots/pizzeria-maragall.jpeg',
-  '/screenshots/ristorante-bergamini.jpeg',
-  '/screenshots/point-of-view.jpeg',
-  '/screenshots/love-phone.jpeg',
-  '/screenshots/la-gorda-hdp.jpeg',
+  '/screenshots/finexacrm.webp',
+  '/screenshots/woodentreehouse.webp',
+  '/screenshots/sciaram33.webp',
+  '/screenshots/nicole-belentani.webp',
+  '/screenshots/pizzeria-maragall.webp',
+  '/screenshots/ristorante-bergamini.webp',
+  '/screenshots/point-of-view.webp',
+  '/screenshots/love-phone.webp',
+  '/screenshots/la-gorda-hdp.webp',
+  '/screenshots/jacopo.webp',
 ]
 
 const ROW1 = [...IMAGES, ...IMAGES, ...IMAGES]
