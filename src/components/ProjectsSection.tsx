@@ -4,13 +4,14 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 const projects = [
   { number: '01', category: 'Client', name: 'Wooden Tree House', url: 'https://www.woodentreehousesgp.com/' },
   { number: '02', category: 'Client', name: 'Finexa CRM', url: 'https://finexacrm.vercel.app/' },
-  { number: '03', category: 'Client', name: 'Nicole Belentani', url: 'https://nicolebelentani.vercel.app/' },
+  { number: '03', category: 'Client', name: 'Nutrizionista Nicole Belentani', url: 'https://nicolebelentani.vercel.app/' },
   { number: '04', category: 'Client', name: 'Sciaram33', url: 'https://sciaram33.vercel.app/' },
   { number: '05', category: 'Client', name: 'Pizzeria Maragall', url: 'https://pizzeria-maragall.vercel.app/' },
   { number: '06', category: 'Client', name: 'Ristorante Bergamini', url: 'https://ristorante-bergamini.vercel.app/' },
   { number: '07', category: 'Client', name: 'Point of View', url: 'https://point-of-view-nine.vercel.app/' },
   { number: '08', category: 'Client', name: 'Love Phone', url: 'https://love-phone-blond.vercel.app/' },
   { number: '09', category: 'Client', name: 'La Gorda HDP', url: 'https://la-gorda-hdp.vercel.app/' },
+  { number: '10', category: 'Client', name: 'Dott. Jacopo Di Bernardini', url: 'https://jacopo-dibernardini.vercel.app/' },
 ]
 
 interface ProjectCardProps {
@@ -41,11 +42,12 @@ function ProjectCard({ project, index, total, progress, simple = false }: Projec
     'point-of-view': 'point-of-view',
     'love-phone': 'love-phone',
     'la-gorda-hdp': 'la-gorda-hdp',
+    'jacopo-dibernardini': 'jacopo',
   }
   const screenshotKey = Object.keys(screenshotMap).find(key => project.url.includes(key))
   const screenshotSrc = screenshotKey
-    ? `/screenshots/${screenshotMap[screenshotKey]}.jpeg`
-    : '/screenshots/woodentreehouse.jpeg'
+    ? `/screenshots/${screenshotMap[screenshotKey]}.webp`
+    : '/screenshots/woodentreehouse.webp'
 
   const cardContent = (
     <>
