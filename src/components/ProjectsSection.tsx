@@ -12,6 +12,7 @@ const projects = [
   { number: '08', category: 'Client', name: 'Love Phone', url: 'https://love-phone-blond.vercel.app/', tag: 'Creative' },
   { number: '09', category: 'Client', name: 'La Gorda HDP', url: 'https://la-gorda-hdp.vercel.app/', tag: 'Restaurants' },
   { number: '10', category: 'Client', name: 'Dott. Jacopo Di Bernardini', url: 'https://jacopo-dibernardini.vercel.app/', tag: 'Professionals' },
+  { number: '11', category: 'Client', name: 'Il Ponte Mercabarna', url: 'https://ilponte.vercel.app/', tag: 'Restaurants' },
 ]
 
 interface ProjectCardProps {
@@ -43,6 +44,7 @@ function ProjectCard({ project, index, total, progress, simple = false }: Projec
     'love-phone': 'love-phone',
     'la-gorda-hdp': 'la-gorda-hdp',
     'jacopo-dibernardini': 'jacopo',
+    'ilponte': 'ilponte',
   }
   const screenshotKey = Object.keys(screenshotMap).find(key => project.url.includes(key))
   const screenshotSrc = screenshotKey
