@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const projects = [
   { number: '01', category: 'Client', name: 'Wooden Tree House', url: 'https://www.woodentreehousesgp.com/', tag: 'Creative' },
@@ -15,166 +15,137 @@ const projects = [
   { number: '11', category: 'Client', name: 'Il Ponte Mercabarna', url: 'https://ilponte.vercel.app/', tag: 'Restaurants' },
 ]
 
-interface ProjectCardProps {
-  project: typeof projects[0]
-  index: number
-  total: number
-  progress: any
-  simple?: boolean
+const screenshotMap: Record<string, string> = {
+  'woodentreehousesgp.com': 'woodentreehouse',
+  'finexacrm': 'finexacrm',
+  'sciaram33': 'sciaram33',
+  'nicolebelentani': 'nicole-belentani',
+  'pizzeria-maragall': 'pizzeria-maragall',
+  'ristorante-bergamini': 'ristorante-bergamini',
+  'point-of-view': 'point-of-view',
+  'love-phone': 'love-phone',
+  'la-gorda-hdp': 'la-gorda-hdp',
+  'jacopo-dibernardini': 'jacopo',
+  'ilponte': 'ilponte',
 }
 
-function ProjectCard({ project, index, total, progress, simple = false }: ProjectCardProps) {
+function getScreenshot(url: string) {
+  const key = Object.keys(screenshotMap).find(k => url.includes(k))
+  return key ? `/screenshots/${screenshotMap[key]}.webp` : '/screenshots/woodentreehouse.webp'
+}
+
+function ProjectCard({ project }: { project: typeof projects[0] }) {
+  const [hovered, setHovered] = useState(false)
   const [iframeOpen, setIframeOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-  const targetScale = 1 - (total - 1 - index) * 0.03
-  const scale = useTransform(progress, [index / total, 1], [1, targetScale])
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768)
-  }, [])
-
-  const screenshotMap: Record<string, string> = {
-    'woodentreehousesgp.com': 'woodentreehouse',
-    'finexacrm': 'finexacrm',
-    'sciaram33': 'sciaram33',
-    'nicolebelentani': 'nicole-belentani',
-    'pizzeria-maragall': 'pizzeria-maragall',
-    'ristorante-bergamini': 'ristorante-bergamini',
-    'point-of-view': 'point-of-view',
-    'love-phone': 'love-phone',
-    'la-gorda-hdp': 'la-gorda-hdp',
-    'jacopo-dibernardini': 'jacopo',
-    'ilponte': 'ilponte',
-  }
-  const screenshotKey = Object.keys(screenshotMap).find(key => project.url.includes(key))
-  const screenshotSrc = screenshotKey
-    ? `/screenshots/${screenshotMap[screenshotKey]}.webp`
-    : '/screenshots/woodentreehouse.webp'
-
-  const cardContent = (
-    <>
-      {/* Top row */}
-      <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
-        <div className="flex items-center gap-4 flex-wrap">
-          <span
-            className="font-black leading-none"
-            style={{ color: '#D7E2EA', fontSize: 'clamp(2rem, 6vw, 5rem)', lineHeight: 1 }}
-          >
-            {project.number}
-          </span>
-          <span
-            className="font-light uppercase tracking-widest"
-            style={{ color: '#D7E2EA', opacity: 0.5, fontSize: 'clamp(0.7rem, 1.2vw, 1rem)' }}
-          >
-            {project.category}
-          </span>
-          <span
-            className="font-medium uppercase"
-            style={{ color: '#D7E2EA', fontSize: 'clamp(1rem, 2vw, 1.8rem)' }}
-          >
-            {project.name}
-          </span>
-        </div>
-        <button
-          onClick={() => setIframeOpen(true)}
-          style={{
-            border: '2px solid #D7E2EA',
-            color: '#D7E2EA',
-            borderRadius: '9999px',
-            background: 'transparent',
-            cursor: 'pointer',
-            fontFamily: 'Kanit, sans-serif',
-            fontWeight: 500,
-            textTransform: 'uppercase',
-            letterSpacing: '0.15em',
-            fontSize: 'clamp(0.7rem, 1vw, 0.9rem)',
-            padding: '0.6rem 1.5rem',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(215,226,234,0.1)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-        >
-          View Project
-        </button>
-      </div>
-
-      {/* Preview */}
-      <div
-        style={{
-          width: '100%',
-          height: 'auto',
-          aspectRatio: '16/9',
-          borderRadius: '24px',
-          overflow: 'hidden',
-          background: 'rgba(215,226,234,0.05)',
-        }}
-      >
-        {isMobile ? (
-          <img
-            src={screenshotSrc}
-            alt={project.name}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              borderRadius: '24px',
-              backgroundColor: '#111',
-            }}
-          />
-        ) : (
-          <iframe
-            src={project.url}
-            style={{
-              width: '100%',
-              height: '100%',
-              border: 'none',
-              borderRadius: '24px',
-              pointerEvents: 'none',
-            }}
-            title={project.name}
-            loading="lazy"
-          />
-        )}
-      </div>
-    </>
-  )
+  const screenshot = getScreenshot(project.url)
 
   return (
     <>
-      {simple ? (
-        <div
-          style={{
-            width: '100%',
-            backgroundColor: '#0C0C0C',
-            border: '2px solid #D7E2EA',
-            borderRadius: '40px',
-            padding: '1.5rem',
-            marginBottom: '1.5rem',
-          }}
-        >
-          {cardContent}
-        </div>
-      ) : (
-        <div style={{ position: 'sticky', top: '5rem', height: 'auto' }}>
-          <motion.div
-            style={{
-              scale,
-              position: 'relative',
-              top: 0,
-              width: '100%',
-              backgroundColor: '#0C0C0C',
-              border: '2px solid #D7E2EA',
-              borderRadius: '40px',
-              padding: '1.5rem',
-              transformOrigin: 'top center',
-              marginBottom: 0,
-            }}
-          >
-            {cardContent}
-          </motion.div>
-        </div>
-      )}
+      <motion.div
+        onHoverStart={() => setHovered(true)}
+        onHoverEnd={() => setHovered(false)}
+        onClick={() => setIframeOpen(true)}
+        style={{
+          position: 'relative',
+          backgroundColor: '#0C0C0C',
+          border: '2px solid rgba(215,226,234,0.2)',
+          borderRadius: '24px',
+          padding: '1.5rem',
+          cursor: 'pointer',
+          overflow: 'hidden',
+          transition: 'border-color 0.3s ease',
+        }}
+        whileHover={{ borderColor: 'rgba(215,226,234,0.8)' }}
+      >
+        {/* Screenshot preview on hover */}
+        <AnimatePresence>
+          {hovered && (
+            <motion.div
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 0,
+                overflow: 'hidden',
+                borderRadius: '22px',
+              }}
+            >
+              <img
+                src={screenshot}
+                alt={project.name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  filter: 'brightness(0.35)',
+                }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-      {/* Modal iframe overlay */}
+        {/* Card content */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+            <span style={{
+              fontFamily: 'Kanit, sans-serif',
+              fontWeight: 900,
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+              color: hovered ? '#D7E2EA' : 'rgba(215,226,234,0.15)',
+              lineHeight: 1,
+              transition: 'color 0.3s ease',
+            }}>
+              {project.number}
+            </span>
+            <span style={{
+              fontFamily: 'Kanit, sans-serif',
+              fontWeight: 400,
+              fontSize: '0.75rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              color: hovered ? 'rgba(215,226,234,0.9)' : 'rgba(215,226,234,0.4)',
+              border: '1px solid',
+              borderColor: hovered ? 'rgba(215,226,234,0.6)' : 'rgba(215,226,234,0.2)',
+              borderRadius: '9999px',
+              padding: '0.3rem 0.9rem',
+              transition: 'all 0.3s ease',
+            }}>
+              {project.tag}
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <span style={{
+              fontFamily: 'Kanit, sans-serif',
+              fontWeight: 600,
+              fontSize: 'clamp(1rem, 2vw, 1.4rem)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              color: '#D7E2EA',
+            }}>
+              {project.name}
+            </span>
+            <motion.span
+              animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : -8 }}
+              transition={{ duration: 0.2 }}
+              style={{
+                fontFamily: 'Kanit, sans-serif',
+                fontSize: '0.8rem',
+                color: '#D7E2EA',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+              }}
+            >
+              View ↗
+            </motion.span>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Modal */}
       {iframeOpen && (
         <div
           style={{
@@ -237,19 +208,9 @@ function ProjectCard({ project, index, total, progress, simple = false }: Projec
 }
 
 export default function ProjectsSection() {
-  const cardsRef = useRef<HTMLDivElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
   const [activeFilter, setActiveFilter] = useState('All')
   const filters = ['All', 'Restaurants', 'Professionals', 'Creative']
   const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.tag === activeFilter)
-  const { scrollYProgress } = useScroll({
-    target: cardsRef,
-    offset: ['start start', 'end end'],
-  })
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768)
-  }, [])
 
   return (
     <section
@@ -264,6 +225,7 @@ export default function ProjectsSection() {
         Projects
       </h2>
 
+      {/* Filters */}
       <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
         {filters.map(filter => (
           <button
@@ -289,25 +251,30 @@ export default function ProjectsSection() {
         ))}
       </div>
 
-      <div
-        ref={cardsRef}
+      {/* Grid */}
+      <motion.div
+        layout
         style={{
-          height: 'auto',
-          paddingBottom: isMobile ? 0 : `${filteredProjects.length * 80}px`,
-          position: 'relative',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 480px), 1fr))',
+          gap: '1rem',
         }}
       >
-        {filteredProjects.map((project, i) => (
-          <ProjectCard
-            key={project.number}
-            project={project}
-            index={i}
-            total={filteredProjects.length}
-            progress={scrollYProgress}
-            simple={isMobile}
-          />
-        ))}
-      </div>
+        <AnimatePresence mode="popLayout">
+          {filteredProjects.map((project) => (
+            <motion.div
+              key={project.number}
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ProjectCard project={project} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </section>
   )
 }
