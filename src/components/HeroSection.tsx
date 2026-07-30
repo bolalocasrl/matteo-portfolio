@@ -8,7 +8,7 @@ export default function HeroSection() {
   const heroRef = useRef<HTMLElement>(null)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!heroRef.current) return
+    if (!heroRef.current || window.innerWidth < 640) return
     const rect = heroRef.current.getBoundingClientRect()
     const centerX = rect.width / 2
     const centerY = rect.height / 2
@@ -57,20 +57,30 @@ export default function HeroSection() {
       </div>
 
       {/* Portrait */}
-      <motion.div
-        animate={{ x: mousePos.x, y: mousePos.y }}
-        transition={{ type: 'spring', stiffness: 150, damping: 20, mass: 0.5 }}
-        className="absolute left-1/2 -translate-x-1/2 z-10 w-[260px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-[50%] -translate-y-[40%] sm:top-auto sm:translate-y-0 sm:bottom-0"
+      {/* Wrapper di posizionamento — non animato */}
+      <div
+        className="absolute z-10"
+        style={{
+          left: '50%',
+          bottom: 0,
+          transform: 'translateX(-50%)',
+          width: 'clamp(260px, 40vw, 520px)',
+        }}
       >
-        <FadeIn delay={0.6} y={30}>
+        {/* Wrapper animato — solo per il movimento */}
+        <motion.div
+          animate={{ x: mousePos.x, y: mousePos.y }}
+          transition={{ type: 'spring', stiffness: 120, damping: 18, mass: 0.6 }}
+          style={{ width: '100%' }}
+        >
           <img
             src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
             alt="Matteo D'Angelo"
-            className="w-full h-auto"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
             loading="lazy"
           />
-        </FadeIn>
-      </motion.div>
+        </motion.div>
+      </div>
 
       {/* Bottom bar */}
       <div
