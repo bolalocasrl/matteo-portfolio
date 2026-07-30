@@ -8,10 +8,10 @@ export default function HeroSection() {
   const [isMobile, setIsMobile] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
 
-  useEffect(() => { setIsMobile(window.innerWidth < 640) }, [])
+  useEffect(() => { setIsMobile(window.innerWidth < 768) }, [])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!heroRef.current || window.innerWidth < 640) return
+    if (!heroRef.current || window.innerWidth < 768) return
     const rect = heroRef.current.getBoundingClientRect()
     const centerX = rect.width / 2
     const centerY = rect.height / 2
@@ -66,8 +66,9 @@ export default function HeroSection() {
           position: 'absolute',
           zIndex: 10,
           left: '50%',
-          bottom: 0,
-          transform: 'translateX(-50%)',
+          top: isMobile ? '45%' : 'auto',
+          bottom: isMobile ? 'auto' : 0,
+          transform: isMobile ? 'translate(-50%, -50%)' : 'translateX(-50%)',
           width: isMobile ? 'clamp(200px, 60vw, 300px)' : 'clamp(260px, 40vw, 520px)',
         }}
       >
