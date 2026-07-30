@@ -13,6 +13,8 @@ const projects = [
   { number: '09', category: 'Client', name: 'La Gorda HDP', url: 'https://la-gorda-hdp.vercel.app/', tag: 'Restaurants' },
   { number: '10', category: 'Client', name: 'Dott. Jacopo Di Bernardini', url: 'https://jacopo-dibernardini.vercel.app/', tag: 'Professionals' },
   { number: '11', category: 'Client', name: 'Il Ponte Mercabarna', url: 'https://ilponte.vercel.app/', tag: 'Restaurants' },
+  { number: '12', category: 'Client', name: 'LifeOS', url: 'https://lifeos-matte.vercel.app/', tag: 'Web App' },
+  { number: '13', category: 'Client', name: 'Safety House', url: 'https://safety-house-website-xi.vercel.app/it', tag: 'Web App' },
 ]
 
 const screenshotMap: Record<string, string> = {
@@ -27,6 +29,8 @@ const screenshotMap: Record<string, string> = {
   'la-gorda-hdp': 'la-gorda-hdp',
   'jacopo-dibernardini': 'jacopo',
   'ilponte': 'ilponte',
+  'lifeos-matte': 'lifeos',
+  'safety-house-website': 'safetyhouse',
 }
 
 function getScreenshot(url: string) {
@@ -209,7 +213,7 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState('All')
-  const filters = ['All', 'Restaurants', 'Professionals', 'Creative']
+  const filters = ['All', 'Restaurants', 'Professionals', 'Creative', 'Web App']
   const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.tag === activeFilter)
 
   return (
