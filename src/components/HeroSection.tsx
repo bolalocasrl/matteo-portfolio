@@ -1,9 +1,31 @@
+import { useState, useRef } from 'react'
+import { motion } from 'framer-motion'
 import FadeIn from './FadeIn'
 import ContactButton from './ContactButton'
 
 export default function HeroSection() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const heroRef = useRef<HTMLElement>(null)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!heroRef.current) return
+    const rect = heroRef.current.getBoundingClientRect()
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const x = (e.clientX - rect.left - centerX) / 18
+    const y = (e.clientY - rect.top - centerY) / 18
+    setMousePos({ x, y })
+  }
+
+  const handleMouseLeave = () => {
+    setMousePos({ x: 0, y: 0 })
+  }
+
   return (
     <section
+      ref={heroRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       style={{ backgroundColor: '#0C0C0C', overflowX: 'clip' }}
       className="h-screen flex flex-col relative"
     >
@@ -35,7 +57,11 @@ export default function HeroSection() {
       </div>
 
       {/* Portrait */}
-      <div className="absolute left-1/2 -translate-x-1/2 z-10 w-[260px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-[50%] -translate-y-[40%] sm:top-auto sm:translate-y-0 sm:bottom-0">
+      <motion.div
+        animate={{ x: mousePos.x, y: mousePos.y }}
+        transition={{ type: 'spring', stiffness: 150, damping: 20, mass: 0.5 }}
+        className="absolute left-1/2 -translate-x-1/2 z-10 w-[260px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-[50%] -translate-y-[40%] sm:top-auto sm:translate-y-0 sm:bottom-0"
+      >
         <FadeIn delay={0.6} y={30}>
           <img
             src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
@@ -44,7 +70,7 @@ export default function HeroSection() {
             loading="lazy"
           />
         </FadeIn>
-      </div>
+      </motion.div>
 
       {/* Bottom bar */}
       <div
