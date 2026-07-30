@@ -1,11 +1,14 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import FadeIn from './FadeIn'
 import ContactButton from './ContactButton'
 
 export default function HeroSection() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isMobile, setIsMobile] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
+
+  useEffect(() => { setIsMobile(window.innerWidth < 640) }, [])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!heroRef.current || window.innerWidth < 640) return
@@ -59,12 +62,13 @@ export default function HeroSection() {
       {/* Portrait */}
       {/* Wrapper di posizionamento — non animato */}
       <div
-        className="absolute z-10"
         style={{
+          position: 'absolute',
+          zIndex: 10,
           left: '50%',
           bottom: 0,
           transform: 'translateX(-50%)',
-          width: 'clamp(260px, 40vw, 520px)',
+          width: isMobile ? 'clamp(200px, 60vw, 300px)' : 'clamp(260px, 40vw, 520px)',
         }}
       >
         {/* Wrapper animato — solo per il movimento */}
