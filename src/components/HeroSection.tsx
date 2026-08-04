@@ -2,8 +2,10 @@ import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import FadeIn from './FadeIn'
 import ContactButton from './ContactButton'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function HeroSection() {
+  const { t, lang, setLang } = useLanguage()
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isMobile, setIsMobile] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
@@ -24,6 +26,13 @@ export default function HeroSection() {
     setMousePos({ x: 0, y: 0 })
   }
 
+  const navLinks = [
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.projects, href: '#projects' },
+    { label: t.nav.services, href: '#services' },
+    { label: t.nav.contact, href: '#contact' },
+  ]
+
   return (
     <section
       ref={heroRef}
@@ -35,16 +44,42 @@ export default function HeroSection() {
       {/* Navbar */}
       <FadeIn delay={0} y={-20}>
         <nav className="flex justify-between items-center px-6 md:px-10 pt-6 md:pt-8">
-          {['About', 'Projects', 'Services', 'Contact'].map((item) => (
+          {navLinks.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
+              key={item.href}
+              href={item.href}
               style={{ color: '#D7E2EA' }}
               className="font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.4rem] transition-opacity duration-200 hover:opacity-70"
             >
-              {item}
+              {item.label}
             </a>
           ))}
+
+          {/* Language switcher */}
+          <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+            {(['en', 'it', 'es'] as const).map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontFamily: 'Kanit, sans-serif',
+                  fontWeight: 500,
+                  fontSize: '0.75rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  color: '#D7E2EA',
+                  opacity: lang === l ? 1 : 0.4,
+                  padding: '0.2rem 0.4rem',
+                  transition: 'opacity 0.2s ease',
+                }}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
         </nav>
       </FadeIn>
 
@@ -54,13 +89,12 @@ export default function HeroSection() {
           <h1
             className="hero-heading font-black uppercase tracking-tight leading-none w-full text-[13vw] sm:text-[14vw] md:text-[15vw] lg:text-[16vw] px-4"
           >
-            Hi, i&apos;m Matte
+            {t.hero.heading}
           </h1>
         </FadeIn>
       </div>
 
       {/* Portrait */}
-      {/* Wrapper di posizionamento — non animato */}
       <div
         style={{
           position: 'absolute',
@@ -72,7 +106,6 @@ export default function HeroSection() {
           width: isMobile ? 'clamp(200px, 60vw, 300px)' : 'clamp(260px, 40vw, 520px)',
         }}
       >
-        {/* Wrapper animato — solo per il movimento */}
         <motion.div
           animate={{ x: mousePos.x, y: mousePos.y }}
           transition={{ type: 'spring', stiffness: 120, damping: 18, mass: 0.6 }}
@@ -88,23 +121,18 @@ export default function HeroSection() {
       </div>
 
       {/* Bottom bar */}
-      <div
-        className="flex justify-between items-end pb-7 sm:pb-8 md:pb-10 px-6 md:px-10 mt-auto"
-      >
+      <div className="flex justify-between items-end pb-7 sm:pb-8 md:pb-10 px-6 md:px-10 mt-auto">
         <FadeIn delay={0.35} y={20}>
           <p
-            style={{
-              color: '#D7E2EA',
-              fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)'
-            }}
+            style={{ color: '#D7E2EA', fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)' }}
             className="font-light uppercase tracking-wide leading-snug max-w-[160px] sm:max-w-[220px] md:max-w-[260px]"
           >
-            a web designer crafting modern and unforgettable websites
+            {t.hero.subtitle}
           </p>
         </FadeIn>
 
         <FadeIn delay={0.5} y={20}>
-          <ContactButton />
+          <ContactButton label={t.hero.cta} />
         </FadeIn>
       </div>
     </section>

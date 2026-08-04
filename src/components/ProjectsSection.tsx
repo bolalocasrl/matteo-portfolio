@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const projects = [
   { number: '01', category: 'Client', name: 'Wooden Tree House', url: 'https://www.woodentreehousesgp.com/', tag: 'Creative' },
@@ -33,12 +34,15 @@ const screenshotMap: Record<string, string> = {
   'safety-house-website': 'safetyhouse',
 }
 
+// English tags in the same order as the filters arrays in translations
+const EN_FILTER_TAGS = ['All', 'Restaurants', 'Professionals', 'Creative', 'Web App']
+
 function getScreenshot(url: string) {
   const key = Object.keys(screenshotMap).find(k => url.includes(k))
   return key ? `/screenshots/${screenshotMap[key]}.webp` : '/screenshots/woodentreehouse.webp'
 }
 
-function ProjectCard({ project }: { project: typeof projects[0] }) {
+function ProjectCard({ project, viewLabel }: { project: typeof projects[0]; viewLabel: string }) {
   const [hovered, setHovered] = useState(false)
   const [iframeOpen, setIframeOpen] = useState(false)
   const screenshot = getScreenshot(project.url)
@@ -143,7 +147,7 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
                 letterSpacing: '0.1em',
               }}
             >
-              View ↗
+              {viewLabel} ↗
             </motion.span>
           </div>
         </div>
@@ -212,9 +216,12 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 }
 
 export default function ProjectsSection() {
-  const [activeFilter, setActiveFilter] = useState('All')
-  const filters = ['All', 'Restaurants', 'Professionals', 'Creative', 'Web App']
-  const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.tag === activeFilter)
+  const { t } = useLanguage()
+  // Store index so filter survives language switches (tag strings stay in English internally)
+  const [activeFilterIndex, setActiveFilterIndex] = useState(0)
+  const filteredProjects = activeFilterIndex === 0
+    ? projects
+    : projects.filter(p => p.tag === EN_FILTER_TAGS[activeFilterIndex])
 
   return (
     <section
@@ -226,19 +233,19 @@ export default function ProjectsSection() {
         className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20 md:mb-28"
         style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
       >
-        Projects
+        {t.projects.title}
       </h2>
 
       {/* Filters */}
       <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
-        {filters.map(filter => (
+        {t.projects.filters.map((filter, i) => (
           <button
-            key={filter}
-            onClick={() => setActiveFilter(filter)}
+            key={i}
+            onClick={() => setActiveFilterIndex(i)}
             style={{
               border: '2px solid #D7E2EA',
-              color: activeFilter === filter ? '#0C0C0C' : '#D7E2EA',
-              backgroundColor: activeFilter === filter ? '#D7E2EA' : 'transparent',
+              color: activeFilterIndex === i ? '#0C0C0C' : '#D7E2EA',
+              backgroundColor: activeFilterIndex === i ? '#D7E2EA' : 'transparent',
               borderRadius: '9999px',
               padding: '0.5rem 1.5rem',
               fontFamily: 'Kanit, sans-serif',
@@ -274,7 +281,7 @@ export default function ProjectsSection() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <ProjectCard project={project} />
+              <ProjectCard project={project} viewLabel={t.projects.viewProject} />
             </motion.div>
           ))}
         </AnimatePresence>

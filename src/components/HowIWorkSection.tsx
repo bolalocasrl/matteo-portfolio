@@ -1,42 +1,10 @@
 import FadeIn from './FadeIn'
-
-const steps = [
-  {
-    number: '01',
-    title: 'Discovery Call',
-    description: 'We jump on a quick call to understand your project, goals, and vision. No commitment required — just a conversation.',
-  },
-  {
-    number: '02',
-    title: 'First Draft & Feedback',
-    description: 'I present the first version of your website. This is the most important call — we review together, align on preferences, and define any changes.',
-  },
-  {
-    number: '03',
-    title: 'Final Delivery',
-    description: 'The refined version is presented. One last round of adjustments, then we connect the domain, set up any integrations, and go live.',
-  },
-]
-
-const included = [
-  'Domain connection',
-  'CMS setup & training',
-  'Mobile responsive',
-  'Performance optimization',
-  '1 month post-launch support',
-  'Google Analytics setup',
-]
-
-const onRequest = [
-  'Graphic & 3D assets',
-  'Landing pages for agencies',
-  'Digital marketing',
-  'Social media management',
-  'Newsletter setup',
-  'Annual maintenance',
-]
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function HowIWorkSection() {
+  const { t } = useLanguage()
+  const { steps, included, onRequest, includedTitle, onRequestTitle } = t.howIWork
+
   return (
     <section
       id="how-i-work"
@@ -56,7 +24,7 @@ export default function HowIWorkSection() {
               marginBottom: '1.5rem',
             }}
           >
-            How I Work
+            {t.howIWork.title}
           </h2>
         </FadeIn>
 
@@ -72,7 +40,7 @@ export default function HowIWorkSection() {
               marginBottom: '4rem',
             }}
           >
-            A clear and transparent process — from the first call to launch.
+            {t.howIWork.subtitle}
           </p>
         </FadeIn>
 
@@ -146,7 +114,7 @@ export default function HowIWorkSection() {
               marginBottom: '2rem',
             }}
           >
-            What&apos;s always included
+            {includedTitle}
           </p>
         </FadeIn>
 
@@ -193,7 +161,7 @@ export default function HowIWorkSection() {
               marginBottom: '2rem',
             }}
           >
-            Also available on request
+            {onRequestTitle}
           </p>
         </FadeIn>
 

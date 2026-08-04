@@ -1,4 +1,8 @@
-export default function ContactButton() {
+interface ContactButtonProps {
+  label?: string
+}
+
+export default function ContactButton({ label = 'Contact Me' }: ContactButtonProps) {
   const handleClick = () => {
     window.open('https://wa.me/34632854055', '_blank')
   }
@@ -21,7 +25,7 @@ export default function ContactButton() {
       }}
       className="px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base"
     >
-      Contact Me
+      {label}
     </button>
   )
 }

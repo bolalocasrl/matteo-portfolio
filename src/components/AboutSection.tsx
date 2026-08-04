@@ -2,8 +2,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
 import FadeIn from './FadeIn'
 import ContactButton from './ContactButton'
-
-const text = "With more than three years of experience in web design, I focus on creating modern websites and digital experiences. I truly enjoy working with businesses and individuals that aim to stand out and present their best image online. Let's build something incredible together!"
+import { useLanguage } from '../i18n/LanguageContext'
 
 interface AnimatedCharProps {
   char: string
@@ -25,11 +24,14 @@ function AnimatedChar({ char, scrollYProgress, start, end }: AnimatedCharProps) 
 }
 
 export default function AboutSection() {
+  const { t } = useLanguage()
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start 0.8', 'end 0.2']
   })
+
+  const text = t.about.text
 
   return (
     <section
@@ -65,7 +67,7 @@ export default function AboutSection() {
             className="hero-heading font-black uppercase leading-none tracking-tight text-center"
             style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
           >
-            About me
+            {t.about.title}
           </h2>
         </FadeIn>
 
@@ -85,7 +87,7 @@ export default function AboutSection() {
             ))}
           </p>
 
-          <ContactButton />
+          <ContactButton label={t.about.cta} />
         </div>
       </div>
     </section>

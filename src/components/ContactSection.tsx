@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import FadeIn from './FadeIn'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function ContactSection() {
+  const { t } = useLanguage()
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [consent, setConsent] = useState(false)
@@ -44,7 +46,7 @@ export default function ContactSection() {
             className="font-black uppercase leading-none tracking-tight text-center"
             style={{ color: '#0C0C0C', fontSize: 'clamp(3rem, 12vw, 120px)' }}
           >
-            Let&apos;s talk
+            {t.contact.title}
           </h2>
         </FadeIn>
 
@@ -53,7 +55,7 @@ export default function ContactSection() {
             className="text-center font-light leading-relaxed"
             style={{ color: '#0C0C0C', opacity: 0.6, fontSize: 'clamp(1rem, 1.8vw, 1.2rem)' }}
           >
-            Got a project in mind? Leave your email and I&apos;ll get back to you within 24h to hear all about it.
+            {t.contact.subtitle}
           </p>
         </FadeIn>
 
@@ -62,7 +64,7 @@ export default function ContactSection() {
             <div className="flex flex-col gap-4 w-full">
               <input
                 type="email"
-                placeholder="your@email.com"
+                placeholder={t.contact.emailPlaceholder}
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 style={{
@@ -78,7 +80,7 @@ export default function ContactSection() {
                 }}
               />
               <textarea
-                placeholder="Tell me about your project (optional)"
+                placeholder={t.contact.messagePlaceholder}
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 rows={4}
@@ -103,8 +105,8 @@ export default function ContactSection() {
                   style={{ marginTop: '3px', accentColor: '#B600A8', width: '16px', height: '16px', flexShrink: 0 }}
                 />
                 <span style={{ color: '#0C0C0C', opacity: 0.6, fontSize: '0.8rem', fontFamily: 'Kanit, sans-serif' }}>
-                  I agree to be contacted by Matteo D&apos;Angelo regarding my project inquiry.{' '}
-                  <span onClick={() => setShowPrivacy(true)} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Privacy policy</span>
+                  {t.contact.consent}{' '}
+                  <span onClick={() => setShowPrivacy(true)} style={{ textDecoration: 'underline', cursor: 'pointer' }}>{t.contact.privacyLink}</span>
                 </span>
               </label>
 
@@ -130,7 +132,7 @@ export default function ContactSection() {
                   alignSelf: 'center',
                 }}
               >
-                Send Message
+                {t.contact.submitBtn}
               </button>
             </div>
           </FadeIn>
@@ -140,7 +142,7 @@ export default function ContactSection() {
               className="text-center font-medium"
               style={{ color: '#B600A8', fontSize: '1.2rem' }}
             >
-              ✓ Got it! I&apos;ll be in touch within 24h.
+              ✓ {t.contact.successMsg}
             </p>
           </FadeIn>
         )}
@@ -148,16 +150,11 @@ export default function ContactSection() {
         {showPrivacy && (
           <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }} onClick={() => setShowPrivacy(false)}>
             <div style={{ backgroundColor: 'white', borderRadius: '24px', padding: '2rem', maxWidth: '540px', width: '100%', maxHeight: '80vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
-              <h2 style={{ fontFamily: 'Kanit, sans-serif', fontWeight: 700, fontSize: '1.5rem', marginBottom: '1rem', color: '#0C0C0C' }}>Privacy Policy</h2>
+              <h2 style={{ fontFamily: 'Kanit, sans-serif', fontWeight: 700, fontSize: '1.5rem', marginBottom: '1rem', color: '#0C0C0C' }}>{t.contact.privacy.title}</h2>
               <p style={{ fontFamily: 'Kanit, sans-serif', fontSize: '0.9rem', color: '#0C0C0C', lineHeight: 1.7, opacity: 0.8 }}>
-                This website is operated by Matteo D&apos;Angelo, web designer.<br /><br />
-                <strong>Data collected:</strong> When you submit the contact form, we collect your email address and any message you choose to provide.<br /><br />
-                <strong>Purpose:</strong> Your data is used solely to respond to your project inquiry. It will not be shared with third parties or used for marketing without your explicit consent.<br /><br />
-                <strong>Retention:</strong> Your data is kept only as long as necessary to handle your inquiry.<br /><br />
-                <strong>Your rights:</strong> You have the right to access, correct, or delete your personal data at any time. Contact us at matteo.dangelo1099@gmail.com.<br /><br />
-                <strong>Contact:</strong> matteo.dangelo1099@gmail.com · WhatsApp +34 632 854 055
+                {t.contact.privacy.body}
               </p>
-              <button onClick={() => setShowPrivacy(false)} style={{ marginTop: '1.5rem', background: '#0C0C0C', color: 'white', border: 'none', borderRadius: '9999px', padding: '0.7rem 2rem', fontFamily: 'Kanit, sans-serif', cursor: 'pointer' }}>Close</button>
+              <button onClick={() => setShowPrivacy(false)} style={{ marginTop: '1.5rem', background: '#0C0C0C', color: 'white', border: 'none', borderRadius: '9999px', padding: '0.7rem 2rem', fontFamily: 'Kanit, sans-serif', cursor: 'pointer' }}>{t.contact.privacy.close}</button>
             </div>
           </div>
         )}
