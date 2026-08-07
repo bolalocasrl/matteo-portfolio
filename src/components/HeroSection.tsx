@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import FadeIn from './FadeIn'
 import ContactButton from './ContactButton'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -8,6 +8,7 @@ export default function HeroSection() {
   const { t, lang, setLang } = useLanguage()
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isMobile, setIsMobile] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
 
   useEffect(() => { setIsMobile(window.innerWidth < 768) }, [])
@@ -33,6 +34,33 @@ export default function HeroSection() {
     { label: t.nav.contact, href: '#contact' },
   ]
 
+  const langSwitcher = (
+    <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+      {(['en', 'it', 'es'] as const).map((l) => (
+        <button
+          key={l}
+          onClick={() => { setLang(l); setMenuOpen(false) }}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            fontFamily: 'Kanit, sans-serif',
+            fontWeight: 500,
+            fontSize: '0.75rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: '#D7E2EA',
+            opacity: lang === l ? 1 : 0.4,
+            padding: '0.2rem 0.4rem',
+            transition: 'opacity 0.2s ease',
+          }}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  )
+
   return (
     <section
       ref={heroRef}
@@ -44,44 +72,133 @@ export default function HeroSection() {
       {/* Navbar */}
       <FadeIn delay={0} y={-20}>
         <nav className="flex justify-between items-center px-6 md:px-10 pt-6 md:pt-8">
-          {navLinks.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              style={{ color: '#D7E2EA' }}
-              className="font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.4rem] transition-opacity duration-200 hover:opacity-70"
-            >
-              {item.label}
-            </a>
-          ))}
 
-          {/* Language switcher */}
-          <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-            {(['en', 'it', 'es'] as const).map((l) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontFamily: 'Kanit, sans-serif',
-                  fontWeight: 500,
-                  fontSize: '0.75rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  color: '#D7E2EA',
-                  opacity: lang === l ? 1 : 0.4,
-                  padding: '0.2rem 0.4rem',
-                  transition: 'opacity 0.2s ease',
-                }}
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-8 lg:gap-12">
+            {navLinks.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                style={{ color: '#D7E2EA' }}
+                className="font-medium uppercase tracking-wider text-lg lg:text-[1.4rem] transition-opacity duration-200 hover:opacity-70"
               >
-                {l}
-              </button>
+                {item.label}
+              </a>
             ))}
           </div>
+
+          {/* Desktop language switcher */}
+          <div className="hidden md:flex">
+            {langSwitcher}
+          </div>
+
+          {/* Mobile: lang switcher left + hamburger right */}
+          <div className="flex md:hidden items-center justify-between w-full">
+            {langSwitcher}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '0.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '5px',
+              }}
+              aria-label="Menu"
+            >
+              <span style={{
+                display: 'block',
+                width: '24px',
+                height: '2px',
+                backgroundColor: '#D7E2EA',
+                borderRadius: '2px',
+                transition: 'all 0.3s ease',
+                transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none',
+              }} />
+              <span style={{
+                display: 'block',
+                width: '24px',
+                height: '2px',
+                backgroundColor: '#D7E2EA',
+                borderRadius: '2px',
+                transition: 'all 0.3s ease',
+                opacity: menuOpen ? 0 : 1,
+              }} />
+              <span style={{
+                display: 'block',
+                width: '24px',
+                height: '2px',
+                backgroundColor: '#D7E2EA',
+                borderRadius: '2px',
+                transition: 'all 0.3s ease',
+                transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none',
+              }} />
+            </button>
+          </div>
+
         </nav>
       </FadeIn>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: '#0C0C0C',
+              zIndex: 100,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '2.5rem',
+            }}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setMenuOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '1.5rem',
+                right: '1.5rem',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                color: '#D7E2EA',
+                fontSize: '1.5rem',
+              }}
+            >
+              ✕
+            </button>
+
+            {navLinks.map((item, i) => (
+              <motion.a
+                key={item.href}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.07 }}
+                style={{ color: '#D7E2EA', textDecoration: 'none' }}
+                className="font-black uppercase tracking-wider"
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.6')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+              >
+                <span style={{ fontSize: 'clamp(2.5rem, 12vw, 4rem)', lineHeight: 1 }}>
+                  {item.label}
+                </span>
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Heading */}
       <div className="mt-6 sm:mt-4 md:-mt-5">
