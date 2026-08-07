@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FadeIn from './FadeIn'
 import ContactButton from './ContactButton'
@@ -7,11 +7,8 @@ import { useLanguage } from '../i18n/LanguageContext'
 export default function HeroSection() {
   const { t, lang, setLang } = useLanguage()
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [isMobile, setIsMobile] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
-
-  useEffect(() => { setIsMobile(window.innerWidth < 768) }, [])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!heroRef.current || window.innerWidth < 768) return
@@ -213,15 +210,11 @@ export default function HeroSection() {
 
       {/* Portrait */}
       <div
-        style={{
-          position: 'absolute',
-          zIndex: 10,
-          left: '50%',
-          top: isMobile ? '45%' : 'auto',
-          bottom: isMobile ? 'auto' : 0,
-          transform: isMobile ? 'translate(-50%, -50%)' : 'translateX(-50%)',
-          width: isMobile ? 'clamp(200px, 60vw, 300px)' : 'clamp(260px, 40vw, 520px)',
-        }}
+        className="absolute z-10 left-1/2 -translate-x-1/2
+          top-[45%] -translate-y-1/2
+          w-[clamp(200px,55vw,300px)]
+          sm:top-auto sm:translate-y-0 sm:bottom-0
+          sm:w-[clamp(260px,40vw,520px)]"
       >
         <motion.div
           animate={{ x: mousePos.x, y: mousePos.y }}
