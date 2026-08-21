@@ -180,7 +180,7 @@ export default function ContactSection() {
                 WhatsApp
               </a>
               <a
-                href="mailto:matteo.dangelo1099@gmail.com"
+                href="mailto:hello@matteodangelo.eu"
                 style={{ color: '#0C0C0C', opacity: 0.6, fontSize: '0.85rem', fontFamily: 'Kanit, sans-serif', textDecoration: 'none' }}
                 onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
                 onMouseLeave={e => (e.currentTarget.style.opacity = '0.6')}

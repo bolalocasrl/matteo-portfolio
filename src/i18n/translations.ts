@@ -59,7 +59,7 @@ export const translations = {
       successMsg: "Got it! I'll be in touch within 24h.",
       privacy: {
         title: 'Privacy Policy',
-        body: "This website is operated by Matteo D'Angelo, web designer. When you submit the contact form, we collect your email address and any message you choose to provide. Your data is used solely to respond to your project inquiry and will not be shared with third parties. Contact: matteo.dangelo1099@gmail.com",
+        body: "This website is operated by Matteo D'Angelo, web designer. When you submit the contact form, we collect your email address and any message you choose to provide. Your data is used solely to respond to your project inquiry and will not be shared with third parties. Contact: hello@matteodangelo.eu",
         close: 'Close',
       },
     },
@@ -124,7 +124,7 @@ export const translations = {
       successMsg: "Ricevuto! Ti rispondo entro 24h.",
       privacy: {
         title: 'Privacy Policy',
-        body: "Questo sito è gestito da Matteo D'Angelo, web designer. Quando invii il modulo di contatto, raccogliamo il tuo indirizzo email e il messaggio che scegli di fornire. I tuoi dati vengono utilizzati esclusivamente per rispondere alla tua richiesta e non saranno condivisi con terzi. Contatto: matteo.dangelo1099@gmail.com",
+        body: "Questo sito è gestito da Matteo D'Angelo, web designer. Quando invii il modulo di contatto, raccogliamo il tuo indirizzo email e il messaggio che scegli di fornire. I tuoi dati vengono utilizzati esclusivamente per rispondere alla tua richiesta e non saranno condivisi con terzi. Contatto: hello@matteodangelo.eu",
         close: 'Chiudi',
       },
     },
@@ -189,7 +189,7 @@ export const translations = {
       successMsg: "¡Recibido! Te respondo en 24h.",
       privacy: {
         title: 'Política de Privacidad',
-        body: "Este sitio es operado por Matteo D'Angelo, diseñador web. Cuando envías el formulario de contacto, recopilamos tu dirección de email y el mensaje que eliges proporcionar. Tus datos se usan exclusivamente para responder a tu consulta y no serán compartidos con terceros. Contacto: matteo.dangelo1099@gmail.com",
+        body: "Este sitio es operado por Matteo D'Angelo, diseñador web. Cuando envías el formulario de contacto, recopilamos tu dirección de email y el mensaje que eliges proporcionar. Tus datos se usan exclusivamente para responder a tu consulta y no serán compartidos con terceros. Contacto: hello@matteodangelo.eu",
         close: 'Cerrar',
       },
     },
