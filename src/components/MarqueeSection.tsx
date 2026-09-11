@@ -11,6 +11,8 @@ const IMAGES = [
   '/screenshots/love-phone.webp',
   '/screenshots/la-gorda-hdp.webp',
   '/screenshots/jacopo.webp',
+  '/screenshots/h2o-attiva.webp',
+  '/screenshots/macelleria-da-semmi.webp',
 ]
 
 const ROW1 = [...IMAGES, ...IMAGES, ...IMAGES]

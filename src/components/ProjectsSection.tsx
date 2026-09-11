@@ -16,6 +16,8 @@ const projects = [
   { number: '11', category: 'Client', name: 'Il Ponte Mercabarna', url: 'https://ilponte.vercel.app/', tag: 'Restaurants' },
   { number: '12', category: 'Client', name: 'LifeOS', url: 'https://lifeos-matte.vercel.app/info.html', tag: 'Web App' },
   { number: '13', category: 'Client', name: 'Safety House', url: 'https://safety-house-website-xi.vercel.app/it', tag: 'Web App' },
+  { number: '14', category: 'Client', name: 'H2O Attiva', url: 'https://h2o-attiva.vercel.app/', tag: 'Creative' },
+  { number: '15', category: 'Client', name: 'Macelleria Da Semmi', url: 'https://macelleria-da-semmi.vercel.app/', tag: 'Restaurants' },
 ]
 
 const screenshotMap: Record<string, string> = {
@@ -32,6 +34,8 @@ const screenshotMap: Record<string, string> = {
   'ilponte': 'ilponte',
   'lifeos-matte': 'lifeos',
   'safety-house-website': 'safetyhouse',
+  'h2o-attiva': 'h2o-attiva',
+  'macelleria-da-semmi': 'macelleria-da-semmi',
 }
 
 // English tags in the same order as the filters arrays in translations
