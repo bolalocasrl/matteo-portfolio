@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../i18n/LanguageContext'
 
@@ -48,12 +48,24 @@ function getScreenshot(url: string) {
 
 const isTouch = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
 
-function ProjectCard({ project, viewLabel }: { project: typeof projects[0]; viewLabel: string }) {
+function ProjectCard({ project, viewLabel, openLabel }: { project: typeof projects[0]; viewLabel: string; openLabel: string }) {
   const [isHovered, setHovered] = useState(false)
   const [iframeOpen, setIframeOpen] = useState(false)
   const screenshot = getScreenshot(project.url)
   // On touch devices there is no hover: always show the "hovered" look
   const hovered = isHovered || isTouch
+
+  // While the preview is open: close with Esc and stop the page behind from scrolling
+  useEffect(() => {
+    if (!iframeOpen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setIframeOpen(false) }
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [iframeOpen])
 
   return (
     <>
@@ -188,8 +200,36 @@ function ProjectCard({ project, viewLabel }: { project: typeof projects[0]; view
             }}
             onClick={e => e.stopPropagation()}
           >
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '4.25rem',
+                zIndex: 10,
+                background: '#0C0C0C',
+                border: '2px solid #D7E2EA',
+                color: '#D7E2EA',
+                borderRadius: '9999px',
+                height: '2.5rem',
+                padding: '0 1.1rem',
+                display: 'flex',
+                alignItems: 'center',
+                fontFamily: 'Kanit, sans-serif',
+                fontSize: '0.8rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {openLabel} ↗
+            </a>
             <button
               onClick={() => setIframeOpen(false)}
+              aria-label="Close"
               style={{
                 position: 'absolute',
                 top: '1rem',
@@ -289,7 +329,7 @@ export default function ProjectsSection() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <ProjectCard project={project} viewLabel={t.projects.viewProject} />
+              <ProjectCard project={project} viewLabel={t.projects.viewProject} openLabel={t.projects.openSite} />
             </motion.div>
           ))}
         </AnimatePresence>
