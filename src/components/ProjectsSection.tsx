@@ -38,6 +38,9 @@ const screenshotMap: Record<string, string> = {
   'macelleria-da-semmi': 'macelleria-da-semmi',
 }
 
+// How many projects are shown before "See all"
+const INITIAL_VISIBLE = 6
+
 // English tags in the same order as the filters arrays in translations
 const EN_FILTER_TAGS = ['All', 'Restaurants', 'Professionals', 'Creative', 'Web App']
 
@@ -267,9 +270,12 @@ export default function ProjectsSection() {
   const { t } = useLanguage()
   // Store index so filter survives language switches (tag strings stay in English internally)
   const [activeFilterIndex, setActiveFilterIndex] = useState(0)
+  const [showAll, setShowAll] = useState(false)
   const filteredProjects = activeFilterIndex === 0
     ? projects
     : projects.filter(p => p.tag === EN_FILTER_TAGS[activeFilterIndex])
+  const visibleProjects = showAll ? filteredProjects : filteredProjects.slice(0, INITIAL_VISIBLE)
+  const hiddenCount = filteredProjects.length - visibleProjects.length
 
   return (
     <section
@@ -320,7 +326,7 @@ export default function ProjectsSection() {
         }}
       >
         <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project) => (
+          {visibleProjects.map((project) => (
             <motion.div
               key={project.number}
               layout
@@ -339,6 +345,32 @@ export default function ProjectsSection() {
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {hiddenCount > 0 && (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
+          <button
+            onClick={() => setShowAll(true)}
+            style={{
+              border: '2px solid #D7E2EA',
+              color: '#D7E2EA',
+              backgroundColor: 'transparent',
+              borderRadius: '9999px',
+              padding: '1rem 2.2rem',
+              fontFamily: 'Kanit, sans-serif',
+              fontWeight: 500,
+              textTransform: 'uppercase',
+              letterSpacing: '0.12em',
+              fontSize: '0.9rem',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#D7E2EA'; e.currentTarget.style.color = '#0C0C0C' }}
+            onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#D7E2EA' }}
+          >
+            {t.projects.seeAll} (+{hiddenCount})
+          </button>
+        </div>
+      )}
     </section>
   )
 }

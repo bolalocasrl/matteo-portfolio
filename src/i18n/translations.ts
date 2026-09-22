@@ -51,6 +51,7 @@ export const translations = {
       filters: ['All', 'Restaurants', 'Professionals', 'Creative', 'Web App'],
       viewProject: 'View',
       openSite: 'Open site',
+      seeAll: 'See all projects',
     },
     contact: {
       title: "Let's talk",
@@ -125,6 +126,7 @@ export const translations = {
       filters: ['Tutti', 'Ristoranti', 'Professionisti', 'Creativi', 'Web App'],
       viewProject: 'Vedi',
       openSite: 'Apri il sito',
+      seeAll: 'Vedi tutti i progetti',
     },
     contact: {
       title: 'Parliamo',
@@ -199,6 +201,7 @@ export const translations = {
       filters: ['Todos', 'Restaurantes', 'Profesionales', 'Creativos', 'Web App'],
       viewProject: 'Ver',
       openSite: 'Abrir sitio',
+      seeAll: 'Ver todos los proyectos',
     },
     contact: {
       title: 'Hablemos',
