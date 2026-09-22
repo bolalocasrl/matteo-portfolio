@@ -46,10 +46,14 @@ function getScreenshot(url: string) {
   return key ? `/screenshots/${screenshotMap[key]}.webp` : '/screenshots/woodentreehouse.webp'
 }
 
+const isTouch = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
+
 function ProjectCard({ project, viewLabel }: { project: typeof projects[0]; viewLabel: string }) {
-  const [hovered, setHovered] = useState(false)
+  const [isHovered, setHovered] = useState(false)
   const [iframeOpen, setIframeOpen] = useState(false)
   const screenshot = getScreenshot(project.url)
+  // On touch devices there is no hover: always show the "hovered" look
+  const hovered = isHovered || isTouch
 
   return (
     <>
