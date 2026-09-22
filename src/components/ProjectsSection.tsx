@@ -48,7 +48,7 @@ function getScreenshot(url: string) {
 
 const isTouch = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
 
-function ProjectCard({ project, viewLabel, openLabel }: { project: typeof projects[0]; viewLabel: string; openLabel: string }) {
+function ProjectCard({ project, tagLabel, viewLabel, openLabel }: { project: typeof projects[0]; tagLabel: string; viewLabel: string; openLabel: string }) {
   const [isHovered, setHovered] = useState(false)
   const [iframeOpen, setIframeOpen] = useState(false)
   const screenshot = getScreenshot(project.url)
@@ -141,7 +141,7 @@ function ProjectCard({ project, viewLabel, openLabel }: { project: typeof projec
               padding: '0.3rem 0.9rem',
               transition: 'all 0.3s ease',
             }}>
-              {project.tag}
+              {tagLabel}
             </span>
           </div>
 
@@ -329,7 +329,12 @@ export default function ProjectsSection() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <ProjectCard project={project} viewLabel={t.projects.viewProject} openLabel={t.projects.openSite} />
+              <ProjectCard
+                project={project}
+                tagLabel={t.projects.filters[EN_FILTER_TAGS.indexOf(project.tag)] ?? project.tag}
+                viewLabel={t.projects.viewProject}
+                openLabel={t.projects.openSite}
+              />
             </motion.div>
           ))}
         </AnimatePresence>
