@@ -194,7 +194,7 @@ export default function ContactSection() {
             style={{ borderTop: '1px solid rgba(12,12,12,0.15)' }}
           >
             <span style={{ color: '#0C0C0C', opacity: 0.4, fontSize: '0.8rem', fontFamily: 'Kanit, sans-serif' }}>
-              © 2025 Matteo D&apos;Angelo
+              © {new Date().getFullYear()} Matteo D&apos;Angelo
             </span>
             <div className="flex gap-6">
               <a
