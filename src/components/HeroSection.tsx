@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FadeIn from './FadeIn'
 import ContactButton from './ContactButton'
@@ -8,7 +8,16 @@ export default function HeroSection() {
   const { t, lang, setLang } = useLanguage()
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showBar, setShowBar] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
+
+  // Show the floating bar once the hero is scrolled past
+  useEffect(() => {
+    const onScroll = () => setShowBar(window.scrollY > window.innerHeight * 0.8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!heroRef.current || window.innerWidth < 768) return
@@ -58,6 +67,50 @@ export default function HeroSection() {
     </div>
   )
 
+  const hamburger = (
+    <button
+      onClick={() => setMenuOpen(!menuOpen)}
+      style={{
+        background: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        padding: '0.5rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '5px',
+      }}
+      aria-label="Menu"
+    >
+      <span style={{
+        display: 'block',
+        width: '24px',
+        height: '2px',
+        backgroundColor: '#D7E2EA',
+        borderRadius: '2px',
+        transition: 'all 0.3s ease',
+        transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none',
+      }} />
+      <span style={{
+        display: 'block',
+        width: '24px',
+        height: '2px',
+        backgroundColor: '#D7E2EA',
+        borderRadius: '2px',
+        transition: 'all 0.3s ease',
+        opacity: menuOpen ? 0 : 1,
+      }} />
+      <span style={{
+        display: 'block',
+        width: '24px',
+        height: '2px',
+        backgroundColor: '#D7E2EA',
+        borderRadius: '2px',
+        transition: 'all 0.3s ease',
+        transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none',
+      }} />
+    </button>
+  )
+
   return (
     <section
       ref={heroRef}
@@ -92,51 +145,65 @@ export default function HeroSection() {
           {/* Mobile: lang switcher left + hamburger right */}
           <div className="flex md:hidden items-center justify-between w-full">
             {langSwitcher}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '0.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '5px',
-              }}
-              aria-label="Menu"
-            >
-              <span style={{
-                display: 'block',
-                width: '24px',
-                height: '2px',
-                backgroundColor: '#D7E2EA',
-                borderRadius: '2px',
-                transition: 'all 0.3s ease',
-                transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none',
-              }} />
-              <span style={{
-                display: 'block',
-                width: '24px',
-                height: '2px',
-                backgroundColor: '#D7E2EA',
-                borderRadius: '2px',
-                transition: 'all 0.3s ease',
-                opacity: menuOpen ? 0 : 1,
-              }} />
-              <span style={{
-                display: 'block',
-                width: '24px',
-                height: '2px',
-                backgroundColor: '#D7E2EA',
-                borderRadius: '2px',
-                transition: 'all 0.3s ease',
-                transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none',
-              }} />
-            </button>
+            {hamburger}
           </div>
 
         </nav>
       </FadeIn>
+
+      {/* Floating bar (appears after the hero) */}
+      <AnimatePresence>
+        {showBar && !menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -24 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            style={{ position: 'fixed', top: '12px', left: 0, right: 0, zIndex: 90, display: 'flex', justifyContent: 'center', padding: '0 12px', pointerEvents: 'none' }}
+          >
+            <nav
+              className="flex items-center justify-between gap-6 md:gap-10 w-full md:w-auto"
+              style={{
+                pointerEvents: 'auto',
+                background: 'rgba(12,12,12,0.94)',
+                backdropFilter: 'blur(14px)',
+                WebkitBackdropFilter: 'blur(14px)',
+                border: '1px solid rgba(215,226,234,0.15)',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.35)',
+                borderRadius: '9999px',
+                padding: '0.55rem 0.75rem 0.55rem 1.4rem',
+              }}
+            >
+              <a
+                href="#"
+                onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+                className="font-black uppercase tracking-tight"
+                style={{ color: '#D7E2EA', fontSize: '1.1rem', textDecoration: 'none' }}
+              >
+                Matte
+              </a>
+
+              <div className="hidden md:flex items-center gap-7">
+                {navLinks.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    style={{ color: '#D7E2EA' }}
+                    className="font-medium uppercase tracking-wider text-sm transition-opacity duration-200 hover:opacity-70"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-2">
+                {langSwitcher}
+                <div className="md:hidden">{hamburger}</div>
+              </div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile menu overlay */}
       <AnimatePresence>
