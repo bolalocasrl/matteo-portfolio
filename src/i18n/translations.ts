@@ -57,6 +57,9 @@ export const translations = {
       privacyLink: 'Privacy policy',
       submitBtn: 'Send Message',
       successMsg: "Got it! I'll be in touch within 24h.",
+      or: 'or',
+      bookCta: 'Tell me about your idea',
+      bookNote: 'Pick a day and time for a 30-minute call',
       privacy: {
         title: 'Privacy Policy',
         body: "This website is operated by Matteo D'Angelo, web designer. When you submit the contact form, we collect your email address and any message you choose to provide. Your data is used solely to respond to your project inquiry and will not be shared with third parties. Contact: hello@matteodangelo.eu",
@@ -122,6 +125,9 @@ export const translations = {
       privacyLink: 'Privacy policy',
       submitBtn: 'Invia Messaggio',
       successMsg: "Ricevuto! Ti rispondo entro 24h.",
+      or: 'oppure',
+      bookCta: 'Raccontami la tua idea',
+      bookNote: 'Scegli giorno e ora per una call di 30 minuti',
       privacy: {
         title: 'Privacy Policy',
         body: "Questo sito è gestito da Matteo D'Angelo, web designer. Quando invii il modulo di contatto, raccogliamo il tuo indirizzo email e il messaggio che scegli di fornire. I tuoi dati vengono utilizzati esclusivamente per rispondere alla tua richiesta e non saranno condivisi con terzi. Contatto: hello@matteodangelo.eu",
@@ -187,6 +193,9 @@ export const translations = {
       privacyLink: 'Política de privacidad',
       submitBtn: 'Enviar Mensaje',
       successMsg: "¡Recibido! Te respondo en 24h.",
+      or: 'o',
+      bookCta: 'Cuéntame tu idea',
+      bookNote: 'Elige día y hora para una llamada de 30 minutos',
       privacy: {
         title: 'Política de Privacidad',
         body: "Este sitio es operado por Matteo D'Angelo, diseñador web. Cuando envías el formulario de contacto, recopilamos tu dirección de email y el mensaje que eliges proporcionar. Tus datos se usan exclusivamente para responder a tu consulta y no serán compartidos con terceros. Contacto: hello@matteodangelo.eu",

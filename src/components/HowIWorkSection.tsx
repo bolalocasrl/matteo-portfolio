@@ -1,4 +1,5 @@
 import FadeIn from './FadeIn'
+import CalendlyButton from './CalendlyButton'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export default function HowIWorkSection() {
@@ -84,6 +85,11 @@ export default function HowIWorkSection() {
                     >
                       {step.description}
                     </p>
+                    {i === 0 && (
+                      <div style={{ marginTop: '1.25rem' }}>
+                        <CalendlyButton label={t.contact.bookCta} size="sm" />
+                      </div>
+                    )}
                   </div>
                 </div>
               </FadeIn>

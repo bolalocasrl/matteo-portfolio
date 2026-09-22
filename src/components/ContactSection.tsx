@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import FadeIn from './FadeIn'
+import CalendlyButton from './CalendlyButton'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export default function ContactSection() {
@@ -146,6 +147,23 @@ export default function ContactSection() {
             </p>
           </FadeIn>
         )}
+
+        {/* Calendly */}
+        <FadeIn delay={0.25} y={20} className="w-full">
+          <div className="flex flex-col items-center gap-6 w-full">
+            <div className="flex items-center gap-4 w-full">
+              <div style={{ flex: 1, borderTop: '1px solid rgba(12,12,12,0.15)' }} />
+              <span style={{ color: '#0C0C0C', opacity: 0.4, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
+                {t.contact.or}
+              </span>
+              <div style={{ flex: 1, borderTop: '1px solid rgba(12,12,12,0.15)' }} />
+            </div>
+            <CalendlyButton label={t.contact.bookCta} />
+            <span style={{ color: '#0C0C0C', opacity: 0.5, fontSize: '0.85rem', fontWeight: 300, textAlign: 'center' }}>
+              {t.contact.bookNote}
+            </span>
+          </div>
+        </FadeIn>
 
         {showPrivacy && (
           <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }} onClick={() => setShowPrivacy(false)}>
