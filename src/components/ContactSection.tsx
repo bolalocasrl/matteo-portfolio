@@ -8,16 +8,17 @@ export default function ContactSection() {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [consent, setConsent] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [showPrivacy, setShowPrivacy] = useState(false)
 
-  const handleSubmit = async () => {
-    if (!email || !consent) return
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email || !consent || status === 'sending') return
 
-    setSubmitted(true)
+    setStatus('sending')
 
     try {
-      await fetch('https://formspree.io/f/xwvjvalk', {
+      const res = await fetch('https://formspree.io/f/xwvjvalk', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,8 +30,10 @@ export default function ContactSection() {
           _subject: `New project inquiry from ${email}`,
         })
       })
+      setStatus(res.ok ? 'sent' : 'error')
     } catch (error) {
       console.error('Form error:', error)
+      setStatus('error')
     }
   }
 
@@ -60,11 +63,12 @@ export default function ContactSection() {
           </p>
         </FadeIn>
 
-        {!submitted ? (
+        {status !== 'sent' ? (
           <FadeIn delay={0.2} y={30} className="w-full">
-            <div className="flex flex-col gap-4 w-full">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
               <input
                 type="email"
+                required
                 placeholder={t.contact.emailPlaceholder}
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -107,13 +111,13 @@ export default function ContactSection() {
                 />
                 <span style={{ color: '#0C0C0C', opacity: 0.6, fontSize: '0.8rem', fontFamily: 'Kanit, sans-serif' }}>
                   {t.contact.consent}{' '}
-                  <span onClick={() => setShowPrivacy(true)} style={{ textDecoration: 'underline', cursor: 'pointer' }}>{t.contact.privacyLink}</span>
+                  <span onClick={e => { e.preventDefault(); setShowPrivacy(true) }} style={{ textDecoration: 'underline', cursor: 'pointer' }}>{t.contact.privacyLink}</span>
                 </span>
               </label>
 
               <button
-                onClick={handleSubmit}
-                disabled={!email || !consent}
+                type="submit"
+                disabled={!email || !consent || status === 'sending'}
                 style={{
                   background: email && consent
                     ? 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)'
@@ -133,9 +137,15 @@ export default function ContactSection() {
                   alignSelf: 'center',
                 }}
               >
-                {t.contact.submitBtn}
+                {status === 'sending' ? t.contact.sending : t.contact.submitBtn}
               </button>
-            </div>
+
+              {status === 'error' && (
+                <p className="text-center" style={{ color: '#C0392B', fontSize: '0.9rem' }}>
+                  {t.contact.errorMsg}
+                </p>
+              )}
+            </form>
           </FadeIn>
         ) : (
           <FadeIn delay={0} y={20}>
