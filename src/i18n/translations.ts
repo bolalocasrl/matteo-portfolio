@@ -5,6 +5,9 @@ export const translations = {
       projects: 'Projects',
       services: 'Services',
       contact: 'Contact',
+      howIWork: 'How I work',
+      back: 'Back',
+      discoverProcess: 'Discover how I work',
     },
     hero: {
       heading: "Hi, I'm Matte",
@@ -76,6 +79,9 @@ export const translations = {
       projects: 'Progetti',
       services: 'Servizi',
       contact: 'Contatti',
+      howIWork: 'Come lavoro',
+      back: 'Torna',
+      discoverProcess: 'Scopri come lavoro',
     },
     hero: {
       heading: "Ciao, sono Matte",
@@ -147,6 +153,9 @@ export const translations = {
       projects: 'Proyectos',
       services: 'Servicios',
       contact: 'Contacto',
+      howIWork: 'Cómo trabajo',
+      back: 'Volver',
+      discoverProcess: 'Descubre cómo trabajo',
     },
     hero: {
       heading: "Hola, soy Matte",

@@ -86,6 +86,30 @@ export default function ServicesSection() {
           </FadeIn>
         ))}
       </div>
+
+      <FadeIn delay={0.1} y={20} className="flex justify-center mt-14 sm:mt-16">
+        <a
+          href="#come-lavoro"
+          style={{
+            display: 'inline-block',
+            background: '#0C0C0C',
+            color: 'white',
+            borderRadius: '9999px',
+            padding: '1rem 2.2rem',
+            fontFamily: 'Kanit, sans-serif',
+            fontWeight: 500,
+            fontSize: '0.9rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.12em',
+            textDecoration: 'none',
+            transition: 'opacity 0.2s ease',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+        >
+          {t.nav.discoverProcess} →
+        </a>
+      </FadeIn>
     </section>
   )
 }
