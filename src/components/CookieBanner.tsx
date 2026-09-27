@@ -5,12 +5,10 @@ import { useLanguage } from '../i18n/LanguageContext'
 
 export default function CookieBanner() {
   const { t } = useLanguage()
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(() => readConsent() === null)
 
   useEffect(() => {
-    const consent = readConsent()
-    if (consent === 'granted') loadAnalytics()
-    else if (consent === null) setVisible(true)
+    if (readConsent() === 'granted') loadAnalytics()
   }, [])
 
   const decide = (value: 'granted' | 'denied') => {

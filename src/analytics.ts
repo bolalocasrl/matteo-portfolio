@@ -22,7 +22,9 @@ export function loadAnalytics() {
   document.head.appendChild(script)
 
   window.dataLayer = window.dataLayer || []
-  window.gtag = function gtag(...args: unknown[]) { window.dataLayer!.push(args) }
+  // gtag must push the `arguments` object itself: an array is ignored by Google
+  // eslint-disable-next-line prefer-rest-params
+  window.gtag = function gtag() { window.dataLayer!.push(arguments) }
   window.gtag('js', new Date())
   window.gtag('config', MEASUREMENT_ID)
 }
