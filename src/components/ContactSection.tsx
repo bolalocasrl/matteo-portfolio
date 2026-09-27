@@ -3,6 +3,36 @@ import FadeIn from './FadeIn'
 import CalendlyButton from './CalendlyButton'
 import { useLanguage } from '../i18n/LanguageContext'
 
+const CRM_URL = 'https://byyxmtijaqlumvdpderc.supabase.co/rest/v1/leads'
+const CRM_KEY = 'sb_publishable_INDPTuk80SEGlGo5IhiQSA_nZAie4DH'
+
+// Creates the lead in LeadCRM. Fire and forget: Formspree stays the flow that matters,
+// so a failure here must never block the form or show an error to the visitor.
+function createCrmLead(email: string, message: string) {
+  fetch(CRM_URL, {
+    method: 'POST',
+    headers: {
+      apikey: CRM_KEY,
+      Authorization: `Bearer ${CRM_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=minimal',
+    },
+    body: JSON.stringify({
+      progetto_id: 'f7ef9352-93f8-4223-885a-6a4d8b2fbb1b',
+      origine: 'inbound',
+      sequenza_sbloccata: false,
+      stato: 'nuovo',
+      step_sequenza: 0,
+      archiviato: false,
+      email,
+      nome: null,
+      telefono: null,
+      note: message || null,
+      provenienza: 'Form contatti sito portfolio',
+    }),
+  }).catch(() => { /* ignored on purpose */ })
+}
+
 export default function ContactSection() {
   const { t } = useLanguage()
   const [email, setEmail] = useState('')
@@ -16,6 +46,8 @@ export default function ContactSection() {
     if (!email || !consent || status === 'sending') return
 
     setStatus('sending')
+
+    createCrmLead(email, message)
 
     try {
       const res = await fetch('https://formspree.io/f/xwvjvalk', {
