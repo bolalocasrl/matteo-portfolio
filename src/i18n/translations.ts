@@ -69,9 +69,14 @@ export const translations = {
       bookNote: 'Pick a day and time for a 30-minute call',
       privacy: {
         title: 'Privacy Policy',
-        body: "This website is operated by Matteo D'Angelo, web designer. When you submit the contact form, we collect your email address and any message you choose to provide. Your data is used solely to respond to your project inquiry and will not be shared with third parties. Contact: hello@matteodangelo.eu",
+        body: "This website is operated by Matteo D'Angelo, web designer. When you submit the contact form, we collect your email address and any message you choose to provide. Your data is used solely to respond to your project inquiry and will not be shared with third parties. If you accept statistics cookies, this site also uses Google Analytics to collect anonymous data about visits; you can decline without any limitation. Contact: hello@matteodangelo.eu",
         close: 'Close',
       },
+    },
+    cookies: {
+      text: 'This site uses Google Analytics cookies to understand how it is used. No statistics cookie is installed if you decline.',
+      accept: 'Accept',
+      decline: 'Decline',
     },
   },
   it: {
@@ -144,9 +149,14 @@ export const translations = {
       bookNote: 'Scegli giorno e ora per una call di 30 minuti',
       privacy: {
         title: 'Privacy Policy',
-        body: "Questo sito è gestito da Matteo D'Angelo, web designer. Quando invii il modulo di contatto, raccogliamo il tuo indirizzo email e il messaggio che scegli di fornire. I tuoi dati vengono utilizzati esclusivamente per rispondere alla tua richiesta e non saranno condivisi con terzi. Contatto: hello@matteodangelo.eu",
+        body: "Questo sito è gestito da Matteo D'Angelo, web designer. Quando invii il modulo di contatto, raccogliamo il tuo indirizzo email e il messaggio che scegli di fornire. I tuoi dati vengono utilizzati esclusivamente per rispondere alla tua richiesta e non saranno condivisi con terzi. Se accetti i cookie statistici, il sito utilizza anche Google Analytics per raccogliere dati anonimi sulle visite; puoi rifiutare senza alcuna limitazione. Contatto: hello@matteodangelo.eu",
         close: 'Chiudi',
       },
+    },
+    cookies: {
+      text: 'Questo sito usa i cookie di Google Analytics per capire come viene utilizzato. Se rifiuti, non viene installato nessun cookie di statistica.',
+      accept: 'Accetta',
+      decline: 'Rifiuta',
     },
   },
   es: {
@@ -219,9 +229,14 @@ export const translations = {
       bookNote: 'Elige día y hora para una llamada de 30 minutos',
       privacy: {
         title: 'Política de Privacidad',
-        body: "Este sitio es operado por Matteo D'Angelo, diseñador web. Cuando envías el formulario de contacto, recopilamos tu dirección de email y el mensaje que eliges proporcionar. Tus datos se usan exclusivamente para responder a tu consulta y no serán compartidos con terceros. Contacto: hello@matteodangelo.eu",
+        body: "Este sitio es operado por Matteo D'Angelo, diseñador web. Cuando envías el formulario de contacto, recopilamos tu dirección de email y el mensaje que eliges proporcionar. Tus datos se usan exclusivamente para responder a tu consulta y no serán compartidos con terceros. Si aceptas las cookies estadísticas, el sitio también usa Google Analytics para recopilar datos anónimos sobre las visitas; puedes rechazarlas sin ninguna limitación. Contacto: hello@matteodangelo.eu",
         close: 'Cerrar',
       },
+    },
+    cookies: {
+      text: 'Este sitio usa cookies de Google Analytics para entender cómo se utiliza. Si rechazas, no se instala ninguna cookie de estadísticas.',
+      accept: 'Aceptar',
+      decline: 'Rechazar',
     },
   },
 }

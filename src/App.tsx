@@ -7,6 +7,7 @@ import ServicesSection from './components/ServicesSection'
 import HowIWorkPage from './components/HowIWorkPage'
 import ProjectsSection from './components/ProjectsSection'
 import ContactSection from './components/ContactSection'
+import CookieBanner from './components/CookieBanner'
 
 const HOW_I_WORK_HASH = '#come-lavoro'
 
@@ -54,7 +55,12 @@ function App() {
   }
 
   if (showHowIWork) {
-    return <HowIWorkPage onBack={goBack} />
+    return (
+      <>
+        <HowIWorkPage onBack={goBack} />
+        <CookieBanner />
+      </>
+    )
   }
 
   return (
@@ -65,6 +71,7 @@ function App() {
       <ServicesSection />
       <ProjectsSection />
       <ContactSection />
+      <CookieBanner />
     </div>
   )
 }
